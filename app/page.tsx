@@ -11,6 +11,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-cream overflow-hidden relative">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
+      <FloatingIcons />
       <Navbar />
       <main className="relative z-10">
         <Hero />
@@ -25,7 +26,6 @@ export default function Home() {
           <p>© {new Date().getFullYear()} The KGPian Game Theory Society. All rights reserved.</p>
         </div>
       </footer>
-      <FloatingIcons />
     </div>
   )
 }
