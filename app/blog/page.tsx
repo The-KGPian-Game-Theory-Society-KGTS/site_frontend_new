@@ -11,7 +11,6 @@ const blogPosts = [
     author: "Dr. Alex Chen",
     date: "September 28, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Theory",
   },
   {
     id: 2,
@@ -20,7 +19,6 @@ const blogPosts = [
     author: "Maya Patel",
     date: "October 5, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Applications",
   },
   {
     id: 3,
@@ -29,7 +27,6 @@ const blogPosts = [
     author: "James Wilson",
     date: "October 12, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Analysis",
   },
   {
     id: 4,
@@ -38,7 +35,6 @@ const blogPosts = [
     author: "Dr. Sarah Johnson",
     date: "October 20, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Theory",
   },
   {
     id: 5,
@@ -47,7 +43,6 @@ const blogPosts = [
     author: "Prof. Michael Brown",
     date: "November 2, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Applications",
   },
   {
     id: 6,
@@ -56,7 +51,6 @@ const blogPosts = [
     author: "Dr. Lisa Zhang",
     date: "November 15, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Analysis",
   },
   {
     id: 7,
@@ -65,7 +59,6 @@ const blogPosts = [
     author: "Alex Martinez",
     date: "November 28, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Applications",
   },
   {
     id: 8,
@@ -75,11 +68,8 @@ const blogPosts = [
     author: "Dr. Robert Kim",
     date: "December 10, 2023",
     image: "/placeholder.svg?height=200&width=300",
-    category: "Theory",
   },
 ]
-
-const categories = ["All", "Theory", "Applications", "Analysis"]
 
 export default function BlogPage() {
   return (
@@ -99,23 +89,6 @@ export default function BlogPage() {
             </p>
           </div>
 
-          <div className="flex justify-center mb-12">
-            <div className="flex flex-wrap gap-4 justify-center">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-4 py-2 rounded-full border ${
-                    category === "All"
-                      ? "bg-red-600 border-red-600 text-cream"
-                      : "border-red-600/30 text-cream hover:border-red-500 hover:bg-red-900/20"
-                  } transition-colors`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post) => (
               <div
@@ -129,9 +102,6 @@ export default function BlogPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 bg-red-600 text-cream text-xs px-2 py-1 rounded shadow-[0_0_10px_rgba(255,0,0,0.4)]">
-                    {post.category}
-                  </div>
                 </div>
 
                 <div className="p-6">
@@ -157,18 +127,6 @@ export default function BlogPage() {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 flex justify-center">
-            <div className="flex space-x-2">
-              <button className="w-10 h-10 flex items-center justify-center rounded-md bg-red-600 text-cream">1</button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-md border border-red-600/30 text-cream hover:bg-red-900/20">
-                2
-              </button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-md border border-red-600/30 text-cream hover:bg-red-900/20">
-                3
-              </button>
-            </div>
           </div>
         </div>
       </main>

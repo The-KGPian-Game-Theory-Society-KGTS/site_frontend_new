@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type FloatingIcon = {
   x: number
@@ -15,8 +15,15 @@ type FloatingIcon = {
 
 export default function FloatingIcons() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -35,19 +42,36 @@ export default function FloatingIcons() {
     window.addEventListener("resize", handleResize)
 
     // Create floating icons
-    const symbols = ["♠", "♥", "♦", "♣", "A", "K", "Q", "J", "10"]
-    const icons: FloatingIcon[] = []
+    const symbols = [
+      // Card symbols
+      "♠", "♥", "♦", "♣", "A", "K", "Q", "J",
+      // Game theory symbols
+      "Σ", "∀", "∃", "∈", "⊂", "∩", "∪", "∅",
+      // Chess pieces
+      "♔", "♕", "♖", "♗", "♘", "♙",
+      // Dice faces
+      "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"
+    ]
 
-    for (let i = 0; i < 20; i++) {
+    // Create a seeded random number generator
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed++) * 10000
+      return x - Math.floor(x)
+    }
+
+    // Initialize icons with deterministic positions
+    const icons: FloatingIcon[] = []
+    for (let i = 0; i < 60; i++) {
+      const seed = i * 0.1
       icons.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 20 + 10,
-        speed: Math.random() * 0.5 + 0.1,
-        symbol: symbols[Math.floor(Math.random() * symbols.length)],
-        opacity: Math.random() * 0.5 + 0.1,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.01,
+        x: seededRandom(seed) * canvas.width,
+        y: seededRandom(seed + 1) * canvas.height,
+        size: 12 + seededRandom(seed + 2) * 20,
+        speed: 0.1 + seededRandom(seed + 3) * 0.4,
+        symbol: symbols[Math.floor(seededRandom(seed + 4) * symbols.length)],
+        opacity: 0.1 + seededRandom(seed + 5) * 0.3,
+        rotation: seededRandom(seed + 6) * Math.PI * 2,
+        rotationSpeed: (seededRandom(seed + 7) - 0.5) * 0.01,
       })
     }
 
@@ -55,7 +79,9 @@ export default function FloatingIcons() {
     const animate = () => {
       if (!ctx || !canvas) return
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // Clear with a semi-transparent black to create a trail effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       icons.forEach((icon) => {
         ctx.save()
@@ -63,13 +89,17 @@ export default function FloatingIcons() {
         ctx.rotate(icon.rotation)
         ctx.font = `${icon.size}px serif`
 
-        // Add glow effect to red suits
-        if (icon.symbol === "♥" || icon.symbol === "♦") {
-          ctx.fillStyle = "#ff0000"
-          ctx.shadowColor = "#ff0000"
+        // Add glow effect to red suits and special symbols
+        if (icon.symbol === "♥" || icon.symbol === "♦" || 
+            icon.symbol === "♔" || icon.symbol === "♕" ||
+            icon.symbol === "Σ" || icon.symbol === "∀") {
+          ctx.fillStyle = `rgba(255, 0, 0, ${icon.opacity})`
+          ctx.shadowColor = "rgba(255, 0, 0, 0.5)"
           ctx.shadowBlur = 15
         } else {
           ctx.fillStyle = `rgba(255, 221, 208, ${icon.opacity})`
+          ctx.shadowColor = "rgba(255, 221, 208, 0.3)"
+          ctx.shadowBlur = 10
         }
 
         ctx.textAlign = "center"
@@ -84,7 +114,7 @@ export default function FloatingIcons() {
         // Reset position if out of screen
         if (icon.y > canvas.height + icon.size) {
           icon.y = -icon.size
-          icon.x = Math.random() * canvas.width
+          icon.x = seededRandom(Date.now() + icon.x) * canvas.width
         }
       })
 
@@ -97,7 +127,23 @@ export default function FloatingIcons() {
       window.removeEventListener("resize", handleResize)
       cancelAnimationFrame(animationId)
     }
-  }, [])
+  }, [mounted])
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-10 opacity-30" aria-hidden="true" />
+  // Don't render anything on the server
+  if (!mounted) return null
+
+  return (
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+      <canvas 
+        ref={canvasRef} 
+        className="w-full h-full"
+        style={{ 
+          mixBlendMode: 'screen',
+          opacity: 0.7,
+          backgroundColor: 'rgba(0, 0, 0, 0.1)'
+        }}
+        aria-hidden="true" 
+      />
+    </div>
+  )
 }

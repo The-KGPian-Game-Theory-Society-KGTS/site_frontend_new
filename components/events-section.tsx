@@ -1,55 +1,46 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react"
 
 const events = [
   {
     id: 1,
-    title: "Prisoner's Dilemma Tournament",
-    date: "October 15, 2023",
-    time: "3:00 PM - 6:00 PM",
-    location: "Central Auditorium",
-    description: "Compete in a tournament based on the classic game theory problem. Prizes for top strategists!",
-    image: "/placeholder.svg?height=200&width=300",
+    title: "Game Theory Workshop",
+    date: "March 15, 2024",
+    time: "10:00 AM - 4:00 PM",
+    location: "Main Auditorium",
+    description: "Learn the fundamentals of game theory through interactive sessions and practical examples.",
+    image: "/events/workshop.jpg",
   },
   {
     id: 2,
-    title: "Guest Lecture: Evolutionary Game Theory",
-    date: "November 5, 2023",
-    time: "5:00 PM - 7:00 PM",
-    location: "Lecture Hall 3",
-    description: "Prof. Sarah Johnson discusses how game theory applies to evolutionary biology and social dynamics.",
-    image: "/placeholder.svg?height=200&width=300",
+    title: "Poker Tournament",
+    date: "March 20, 2024",
+    time: "2:00 PM - 8:00 PM",
+    location: "Student Activity Center",
+    description: "Put your strategic thinking to the test in our annual poker tournament. Prizes to be won!",
+    image: "/events/poker.jpg",
   },
   {
     id: 3,
-    title: "Poker Night: Probability & Strategy",
-    date: "November 20, 2023",
-    time: "7:00 PM - 10:00 PM",
-    location: "Student Center",
-    description: "Learn the mathematics behind poker while enjoying a friendly tournament. No real money involved!",
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 4,
-    title: "Workshop: Game Theory in Economics",
-    date: "December 8, 2023",
-    time: "4:00 PM - 6:30 PM",
-    location: "Economics Department",
-    description:
-      "Hands-on workshop exploring applications of game theory in market dynamics and economic decision-making.",
-    image: "/placeholder.svg?height=200&width=300",
+    title: "Guest Lecture: Strategic Decision Making",
+    date: "March 25, 2024",
+    time: "3:00 PM - 5:00 PM",
+    location: "Lecture Hall 1",
+    description: "Join us for an insightful lecture on strategic decision making in business and economics.",
+    image: "/events/lecture.jpg",
   },
 ]
 
 export default function EventsSection() {
   return (
-    <section id="events" className="py-20 bg-gradient-to-b from-black to-[#8B0000]/30 relative">
-      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
+    <section id="events" className="py-20 bg-black relative">
+      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply z-0" />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,70 +53,72 @@ export default function EventsSection() {
           </h2>
           <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
           <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
-            Join us for exciting events that explore the fascinating world of game theory through competitions,
-            lectures, and hands-on workshops.
+            Join us for exciting events, workshops, and tournaments. Learn, compete, and connect with fellow game theory
+            enthusiasts.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {events.slice(0, 2).map((event, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.map((event) => (
             <motion.div
               key={event.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-black/70 border border-[#8B0000]/30 rounded-lg overflow-hidden hover:border-[#8B0000]/50 transition-all duration-300 ease-in-out group"
+              transition={{ duration: 0.6, delay: event.id * 0.1 }}
             >
-              <div className="h-48 overflow-hidden relative">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${event.image})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-serif font-bold text-cream group-hover:text-[#8B0000] transition-colors">
-                  {event.title}
-                </h3>
-
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center text-cream/70">
-                    <Calendar size={16} className="mr-2 text-[#8B0000]" />
-                    <span>{event.date}</span>
-                  </div>
-
-                  <div className="flex items-center text-cream/70">
-                    <Clock size={16} className="mr-2 text-[#8B0000]" />
-                    <span>{event.time}</span>
-                  </div>
-
-                  <div className="flex items-center text-cream/70">
-                    <MapPin size={16} className="mr-2 text-[#8B0000]" />
-                    <span>{event.location}</span>
-                  </div>
+              <div className="bg-black/70 border border-[#8B0000]/30 rounded-lg overflow-hidden backdrop-blur-sm">
+                <div className="relative h-48">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-serif font-bold text-cream mb-4">{event.title}</h3>
+                  <div className="space-y-2 text-cream/80">
+                    <div className="flex items-center">
+                      <Calendar size={16} className="mr-2 text-[#8B0000]" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock size={16} className="mr-2 text-[#8B0000]" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin size={16} className="mr-2 text-[#8B0000]" />
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-cream/80">{event.description}</p>
 
-                <p className="mt-4 text-cream/80">{event.description}</p>
-
-                <button className="mt-6 px-4 py-2 bg-[#8B0000]/50 text-cream rounded hover:bg-[#8B0000] transition-all duration-300 ease-in-out shadow-[0_0_10px_rgba(139,0,0,0.2)] hover:shadow-[0_0_15px_rgba(139,0,0,0.4)] cursor-pointer hover:scale-105 transform">
-                  Register Now
-                </button>
+                  <button className="mt-6 px-4 py-2 bg-[#8B0000]/50 text-cream rounded hover:bg-[#8B0000] transition-all duration-300 ease-in-out shadow-[0_0_10px_rgba(139,0,0,0.2)] hover:shadow-[0_0_15px_rgba(139,0,0,0.4)] cursor-pointer hover:scale-105 transform">
+                    Register Now
+                  </button>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-center mt-12"
+        >
           <Link
             href="/events"
-            className="inline-flex items-center px-6 py-3 bg-transparent border-2 border-[#8B0000]/50 text-cream rounded-md hover:border-[#8B0000] transition-all duration-300 ease-in-out shadow-[0_0_10px_rgba(139,0,0,0.2)] hover:shadow-[0_0_15px_rgba(139,0,0,0.4)] cursor-pointer hover:bg-[#8B0000]/10 hover:scale-105 transform group"
+            className="inline-flex items-center px-6 py-3 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)]"
           >
-            <span>View All Events</span>
-            <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+            View All Events
+            <ArrowRight className="ml-2" size={18} />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
