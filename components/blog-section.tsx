@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 const blogPosts = [
   {
@@ -42,8 +42,8 @@ export default function BlogSection() {
 
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
@@ -61,8 +61,8 @@ export default function BlogSection() {
           {blogPosts.map((post, index) => (
             <motion.div
               key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-black/70 border border-[#8B0000]/30 rounded-lg overflow-hidden hover:shadow-[0_0_15px_rgba(139,0,0,0.3)] transition-all duration-300 ease-in-out group"

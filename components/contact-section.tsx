@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { motion } from "framer-motion"
-import { Mail, MapPin, Phone, ArrowRight } from "lucide-react"
+import { MapPin, Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 
@@ -49,7 +49,7 @@ export default function ContactSection() {
           </h2>
           <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
           <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
-            Have questions about game theory or interested in joining our society? Get in touch with us and we'll be
+            Have questions about game theory? Get in touch with us and we'll be
             happy to help.
           </p>
         </motion.div>
@@ -67,21 +67,31 @@ export default function ContactSection() {
             <div className="space-y-6">
               <div className="flex items-start">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <Mail size={18} />
+                  <Instagram size={18} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium text-cream">Email</h4>
-                  <p className="text-cream/70">contact@kgpgametheory.org</p>
+                  <h4 className="text-lg font-medium text-cream">Instagram</h4>
+                  <p className="text-cream/70">@kgpgametheory</p>
                 </div>
               </div>
 
               <div className="flex items-start">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <Phone size={18} />
+                  <Facebook size={18} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium text-cream">Phone</h4>
-                  <p className="text-cream/70">+91 123 456 7890</p>
+                  <h4 className="text-lg font-medium text-cream">Facebook</h4>
+                  <p className="text-cream/70">@kgpgametheory</p>
+                </div>
+              </div>
+
+              <div className="flex items-start">
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
+                  <Linkedin size={18} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-medium text-cream">LinkedIn</h4>
+                  <p className="text-cream/70">@kgpgametheory</p>
                 </div>
               </div>
 

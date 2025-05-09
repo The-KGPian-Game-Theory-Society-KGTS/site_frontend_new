@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -171,12 +172,18 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
         >
-          <button className="px-8 py-3 bg-[#8B0000] text-cream rounded-md text-lg font-medium hover:bg-[#A52A2A] transition-all duration-300 ease-in-out shadow-[0_0_20px_rgba(139,0,0,0.5)] hover:shadow-[0_0_25px_rgba(139,0,0,0.7)] cursor-pointer hover:scale-105 transform">
-            Join Now
-          </button>
-          <button className="px-8 py-3 bg-transparent border-2 border-cream/40 text-cream rounded-md text-lg font-medium hover:border-cream/70 transition-all duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(255,255,221,0.3)] cursor-pointer hover:scale-105 transform">
+          <Link
+            href="/games"
+            className="px-8 py-3 bg-transparent border-2 border-cream/40 text-cream rounded-md text-lg font-medium hover:border-cream/70 transition-all duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(255,255,221,0.3)] cursor-pointer hover:scale-105 transform"
+          >
             Explore Games
-          </button>
+          </Link>
+          <Link
+            href="/blog"
+            className="px-8 py-3 bg-transparent border-2 border-cream/40 text-cream rounded-md text-lg font-medium hover:border-cream/70 transition-all duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(255,255,221,0.3)] cursor-pointer hover:scale-105 transform"
+          >
+            Explore Blogs
+          </Link>
         </motion.div>
       </div>
     </section>

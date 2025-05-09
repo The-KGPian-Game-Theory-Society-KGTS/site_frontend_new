@@ -55,9 +55,6 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
-            <button className="px-6 py-2 bg-red-600 text-cream rounded hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-              Join Now
-            </button>
           </div>
 
           {/* Mobile Navigation Toggle */}
@@ -84,9 +81,6 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <button className="px-6 py-2 bg-red-600 text-cream rounded hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-            Join Now
-          </button>
         </div>
       </div>
     </nav>
