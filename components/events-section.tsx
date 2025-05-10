@@ -4,121 +4,90 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react"
-
-const events = [
-  {
-    id: 1,
-    title: "Game Theory Workshop",
-    date: "March 15, 2024",
-    time: "10:00 AM - 4:00 PM",
-    location: "Main Auditorium",
-    description: "Learn the fundamentals of game theory through interactive sessions and practical examples.",
-    image: "/events/workshop.jpg",
-  },
-  {
-    id: 2,
-    title: "Poker Tournament",
-    date: "March 20, 2024",
-    time: "2:00 PM - 8:00 PM",
-    location: "Student Activity Center",
-    description: "Put your strategic thinking to the test in our annual poker tournament. Prizes to be won!",
-    image: "/events/poker.jpg",
-  },
-  {
-    id: 3,
-    title: "Guest Lecture: Strategic Decision Making",
-    date: "March 25, 2024",
-    time: "3:00 PM - 5:00 PM",
-    location: "Lecture Hall 1",
-    description: "Join us for an insightful lecture on strategic decision making in business and economics.",
-    image: "/events/lecture.jpg",
-  },
-]
+import { ongoingEvents } from "@/data/events"
+import { cn } from "@/lib/utils"
 
 export default function EventsSection() {
-  return (
-    <section id="events" className="py-20 bg-black relative">
-      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply z-0" />
+  if (ongoingEvents.length === 0) return null;
 
+  return (
+    <section className="py-16 relative">
+      <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">
-            Upcoming <span className="text-[#8B0000] filter drop-shadow-[0_0_8px_rgba(139,0,0,0.6)]">Events</span>
+            Current <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Events</span>
           </h2>
-          <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
+          <div className="w-20 h-1 bg-red-600 mx-auto"></div>
           <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
-            Join us for exciting events, workshops, and tournaments. Learn, compete, and connect with fellow game theory
-            enthusiasts.
+            Join us for our ongoing events and be part of the game theory community.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event) => (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: event.id * 0.1 }}
-            >
-              <div className="bg-black/70 border border-[#8B0000]/30 rounded-lg overflow-hidden backdrop-blur-sm">
-                <div className="relative h-48">
-                  <Image
-                    src={event.image}
-                    alt={event.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-serif font-bold text-cream mb-4">{event.title}</h3>
-                  <div className="space-y-2 text-cream/80">
-                    <div className="flex items-center">
-                      <Calendar size={16} className="mr-2 text-[#8B0000]" />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock size={16} className="mr-2 text-[#8B0000]" />
-                      <span>{event.time}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin size={16} className="mr-2 text-[#8B0000]" />
-                      <span>{event.location}</span>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-cream/80">{event.description}</p>
-
-                  <button className="mt-6 px-4 py-2 bg-[#8B0000]/50 text-cream rounded hover:bg-[#8B0000] transition-all duration-300 ease-in-out shadow-[0_0_10px_rgba(139,0,0,0.2)] hover:shadow-[0_0_15px_rgba(139,0,0,0.4)] cursor-pointer hover:scale-105 transform">
-                    Register Now
-                  </button>
-                </div>
+          {ongoingEvents.map((event) => (
+            <div key={event.id} className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col">
+              <div className="h-48 overflow-hidden relative">
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${event.image})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
               </div>
-            </motion.div>
+
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-2">
+                  {event.title}
+                </h3>
+
+                <div className="mt-4 space-y-2">
+                  <div className="flex items-center text-cream/70">
+                    <Calendar size={16} className="mr-2 text-red-500" />
+                    <span>{event.date}</span>
+                  </div>
+
+                  <div className="flex items-center text-cream/70">
+                    <Clock size={16} className="mr-2 text-red-500" />
+                    <span>{event.time}</span>
+                  </div>
+
+                  <div className="flex items-center text-cream/70">
+                    <MapPin size={16} className="mr-2 text-red-500" />
+                    <span>{event.location}</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 relative flex-grow">
+                  <div className="overflow-hidden">
+                    <p
+                      className={cn(
+                        "text-cream/80 transition-[max-height] duration-500 ease-in-out",
+                        "group-hover:max-h-[500px]", // reveal all content
+                        "max-h-[4.5rem]" // height to show 3 lines
+                      )}
+                    >
+                      {event.description}
+                    </p>
+                  </div>
+                </div>
+
+                <button className="mt-6 px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]">
+                  Register Now
+                </button>
+              </div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
-        >
+        <div className="text-center mt-12">
           <Link
             href="/events"
-            className="inline-flex items-center px-6 py-3 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)]"
+            className="inline-flex items-center px-6 py-3 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
           >
             View All Events
-            <ArrowRight className="ml-2" size={18} />
+            <ArrowRight className="ml-2" size={20} />
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
