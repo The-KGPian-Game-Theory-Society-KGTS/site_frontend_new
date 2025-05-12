@@ -67,11 +67,11 @@ export default function FloatingIcons() {
         x: seededRandom(seed) * canvas.width,
         y: seededRandom(seed + 1) * canvas.height,
         size: 12 + seededRandom(seed + 2) * 20,
-        speed: 0.1 + seededRandom(seed + 3) * 0.4,
+        speed: 0.3 + seededRandom(seed + 3) * 0.5,
         symbol: symbols[Math.floor(seededRandom(seed + 4) * symbols.length)],
-        opacity: 0.1 + seededRandom(seed + 5) * 0.3,
+        opacity: 0.15 + seededRandom(seed + 5) * 0.2,
         rotation: seededRandom(seed + 6) * Math.PI * 2,
-        rotationSpeed: (seededRandom(seed + 7) - 0.5) * 0.01,
+        rotationSpeed: (seededRandom(seed + 7) - 0.5) * 0.02,
       })
     }
 
@@ -133,13 +133,13 @@ export default function FloatingIcons() {
   if (!mounted) return null
 
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 5 }}>
       <canvas 
         ref={canvasRef} 
         className="w-full h-full"
         style={{ 
           mixBlendMode: 'screen',
-          opacity: 0.7,
+          opacity: 0.4,
           backgroundColor: 'rgba(0, 0, 0, 0.1)'
         }}
         aria-hidden="true" 

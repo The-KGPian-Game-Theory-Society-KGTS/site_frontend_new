@@ -11,7 +11,7 @@ export default function BlogSection() {
   const latestPosts = blogPosts.slice(0, 3)
 
   return (
-    <section id="blogs" className="py-20 bg-black relative">
+    <section id="blogs" className="py-20 relative">
       <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
 
       <div className="container mx-auto px-4">

@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 bg-black relative">
+    <section id="about" className="py-20 relative">
       <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
 
       <div className="container mx-auto px-4">

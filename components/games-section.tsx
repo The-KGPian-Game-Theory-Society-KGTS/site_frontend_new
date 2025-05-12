@@ -31,7 +31,7 @@ const games = [
 
 export default function GamesSection() {
   return (
-    <section id="games" className="py-20 bg-black relative">
+    <section id="games" className="py-20 relative">
       <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply z-0" />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -87,24 +87,6 @@ export default function GamesSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-[#8B0000]/30 to-transparent p-8 rounded-lg">
-            <h3 className="text-2xl font-serif font-bold text-cream mb-4">Ready for a Challenge?</h3>
-            <p className="text-cream/80 mb-6">
-              Join our upcoming tournament and put your strategic thinking to the test!
-            </p>
-            <button className="px-8 py-3 bg-red-600 text-cream rounded-md text-lg font-medium hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.5)] hover:shadow-[0_0_20px_rgba(255,0,0,0.7)]">
-              Register for Tournament
-            </button>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
