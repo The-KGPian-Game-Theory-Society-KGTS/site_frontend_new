@@ -95,7 +95,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
   const relatedPosts = getRelatedPosts(post.relatedPosts)
 
   return (
-    <div className="min-h-screen bg-black text-cream">
+    <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
       <Navbar />
 
