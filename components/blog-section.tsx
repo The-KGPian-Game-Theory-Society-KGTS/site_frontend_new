@@ -1,14 +1,74 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { blogPosts } from "@/data/blog-posts"
+import { useEffect, useState } from "react"
 import BlogCard from "./blog-card"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
+type Blog = {
+  id: number; // Updated to match BlogCard expectations
+  title: string;
+  excerpt: string;
+  image: string;
+  date: string;
+  content: string;
+  author: string;
+  externalLink: string;
+};
+
 export default function BlogSection() {
-  // Get the latest 3 blog posts
-  const latestPosts = blogPosts.slice(0, 3)
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?page=1&limit=3`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs");
+        }
+        const data = await response.json();
+        setBlogs(data.data.blogs);
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
+
+  if (blogs.length === 0 && !error) {
+    return (
+      <section id="blogs" className="py-20 relative">
+        <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
+
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">
+              Latest <span className="text-[#8B0000] filter drop-shadow-[0_0_8px_rgba(139,0,0,0.6)]">Blogs</span>
+            </h2>
+            <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
+            <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
+              Explore our collection of articles on game theory concepts, applications, and the latest research.
+            </p>
+          </motion.div>
+
+          <div className="text-center text-cream">No Blogs to Show at this moment</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="blogs" className="py-20 relative">
@@ -32,7 +92,7 @@ export default function BlogSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {latestPosts.map((post, index) => (
+          {blogs.map((post, index) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0 }}

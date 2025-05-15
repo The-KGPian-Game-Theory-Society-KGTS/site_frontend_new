@@ -4,11 +4,63 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react"
-import { ongoingEvents } from "@/data/events"
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils"
 
+type Event = {
+  id: string;
+  image: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+};
+
 export default function EventsSection() {
-  if (ongoingEvents.length === 0) return null;
+  const [events, setEvents] = useState<Event[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events?page=1&limit=3`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        const data = await response.json();
+        setEvents(data.data.events);
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
+
+  if (events.length === 0 && !error) {
+    return (
+      <section className="py-16 relative">
+        <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">
+              Current <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Events</span>
+            </h2>
+            <div className="w-20 h-1 bg-red-600 mx-auto"></div>
+            <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
+              Join us for our ongoing events and be part of the game theory community.
+            </p>
+          </div>
+          <div className="text-center text-cream">No Events to Show at this moment</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 relative">
@@ -25,7 +77,7 @@ export default function EventsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {ongoingEvents.map((event) => (
+          {events.map((event) => (
             <div key={event.id} className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col">
               <div className="h-48 overflow-hidden relative">
                 <div

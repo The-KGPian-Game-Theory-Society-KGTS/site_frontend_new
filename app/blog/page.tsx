@@ -1,8 +1,46 @@
+"use client";
+
 import Navbar from "@/components/navbar"
-import { blogPosts } from "@/data/blog-posts"
 import BlogCard from "@/components/blog-card"
+import { useEffect, useState } from "react";
+
+type Blog = {
+  id: number; // Change `id` to `number` to match the expected type
+  title: string;
+  author: string;
+  image: string;
+  date: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  externalLink: string; // Add the missing property
+};
 
 export default function BlogPage() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs");
+        }
+        const data = await response.json();
+        setBlogs(data.data.blogs);
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
+
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
@@ -21,7 +59,7 @@ export default function BlogPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+            {blogs.map((post) => (
               <BlogCard key={post.id} post={post} />
             ))}
           </div>
@@ -34,5 +72,5 @@ export default function BlogPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
