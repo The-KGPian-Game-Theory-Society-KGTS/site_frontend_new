@@ -38,11 +38,7 @@ export default function BlogSection() {
     fetchBlogs();
   }, []);
 
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
-
-  if (blogs.length === 0 && !error) {
+  if (error || blogs.length === 0) {
     return (
       <section id="blogs" className="py-20 relative">
         <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />

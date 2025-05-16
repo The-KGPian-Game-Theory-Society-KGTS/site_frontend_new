@@ -38,11 +38,7 @@ export default function EventsSection() {
     fetchEvents();
   }, []);
 
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
-
-  if (events.length === 0 && !error) {
+  if (error || events.length === 0) {
     return (
       <section className="py-16 relative">
         <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
