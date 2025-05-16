@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -17,6 +18,8 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +33,17 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken")
+    setIsLoggedIn(!!token)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
+    router.push("/")
+  }
 
   return (
     <nav
@@ -55,6 +69,30 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
+            {isLoggedIn ? (
+              <>
+                <Link href="/profile" className="text-cream hover:text-red-500 transition-colors relative group">
+                  Profile
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 px-4 py-2 rounded"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors relative group">
+                  Login
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+                <Link href="/auth/signup" className="bg-blue-500 px-4 py-2 rounded">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Navigation Toggle */}
@@ -81,6 +119,31 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
+          {isLoggedIn ? (
+            <>
+              <Link href="/profile" className="text-cream hover:text-red-600 transition-colors py-2" onClick={() => setIsOpen(false)}>
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout()
+                  setIsOpen(false)
+                }}
+                className="bg-red-500 px-4 py-2 rounded"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/auth/login" className="text-cream hover:text-red-600 transition-colors py-2" onClick={() => setIsOpen(false)}>
+                Login
+              </Link>
+              <Link href="/auth/signup" className="bg-blue-500 px-4 py-2 rounded" onClick={() => setIsOpen(false)}>
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
