@@ -39,10 +39,6 @@ export default function EventsPage() {
       ? events
       : events.filter((event) => event.status === filter);
 
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
-
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
@@ -84,6 +80,16 @@ export default function EventsPage() {
               ))}
             </div>
           </div>
+
+          {error && (
+            <div className="text-center text-red-500 mb-4">Error: {error}</div>
+          )}
+
+          {filteredEvents.length === 0 && !error && (
+            <div className="text-center text-cream/80">
+              No Events to Show at this moment.
+            </div>
+          )}
 
           {filteredEvents.length === 0 ? (
             <div className="text-center text-cream/80">

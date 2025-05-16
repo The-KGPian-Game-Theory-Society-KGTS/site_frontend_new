@@ -37,10 +37,6 @@ export default function BlogPage() {
     fetchBlogs();
   }, []);
 
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
-
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
@@ -57,6 +53,16 @@ export default function BlogPage() {
               Explore our collection of articles on game theory concepts, applications, and the latest research.
             </p>
           </div>
+
+          {error && (
+            <div className="text-center text-red-500 mb-4">Error: {error}</div>
+          )}
+
+          {blogs.length === 0 && !error && (
+            <div className="text-center text-cream/80">
+              No Blogs to Show at this moment.
+            </div>
+          )}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs.map((post) => (
