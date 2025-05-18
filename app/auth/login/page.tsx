@@ -8,11 +8,13 @@ export default function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
 
     const isEmail = emailOrUsername.includes("@");
     const payload = isEmail
@@ -40,6 +42,7 @@ export default function LoginPage() {
           localStorage.setItem("email", emailOrUsername.trim());
         }
         router.push("/auth/verify-email");
+        setLoading(false);
         return;
       }
 
@@ -54,13 +57,20 @@ export default function LoginPage() {
       router.push("/profile");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An unknown error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-theme-background pt-16">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 transition-all">
+          <span className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent shadow-2xl"></span>
+        </div>
+      )}
       <Navbar />
-      <div className="flex items-center justify-center py-8">
+      <div className={`flex items-center justify-center py-8 ${loading ? 'pointer-events-none select-none blur-sm' : ''}`}>
         <form
           onSubmit={handleLogin}
           className="bg-theme-card p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6"
@@ -75,6 +85,7 @@ export default function LoginPage() {
               onChange={(e) => setEmailOrUsername(e.target.value)}
               className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              disabled={loading}
             />
           </div>
           <div className="mb-6">
@@ -85,10 +96,11 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              disabled={loading}
             />
           </div>
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition duration-300">
-            Login
+          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition duration-300" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>
