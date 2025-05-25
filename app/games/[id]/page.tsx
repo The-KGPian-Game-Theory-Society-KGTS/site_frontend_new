@@ -44,7 +44,7 @@ const getGame = (id: string) => {
   }
 }
 
-export default function GamePage({ params }: { params: { id: string } }) {
+export default async function GamePage({ params }: { params: { id: string } }) {
   const game = getGame(params.id)
 
   return (

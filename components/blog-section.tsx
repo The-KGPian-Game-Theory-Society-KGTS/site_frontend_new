@@ -90,7 +90,7 @@ export default function BlogSection() {
         <div className="grid md:grid-cols-3 gap-8">
           {blogs.map((post, index) => (
             <motion.div
-              key={post.id}
+              key={`${post.id}-${index}`}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}

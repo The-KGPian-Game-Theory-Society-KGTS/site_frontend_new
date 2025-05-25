@@ -353,7 +353,7 @@ const BlackHoleGame = () => {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.2 }}
                       className={`
-                        w-16 h-16 flex justify-center items-center rounded-lg cursor-pointer
+                        w-16 h-16 flex justify-center items-center rounded-full cursor-pointer
                         transition-all duration-200
                         border-2
                         ${timeoutWinner ? 'opacity-50 pointer-events-none' : ''}
@@ -368,7 +368,7 @@ const BlackHoleGame = () => {
                           {board[cellIndex]?.value}
                         </div>
                       ) : isGameOver && cellIndex === blackHoleIndex ? (
-                        <div className="text-red-500 font-bold text-sm">BLACK HOLE</div>
+                        <div className="text-red-500 text-center font-bold text-xs">BLACK HOLE</div>
                       ) : null}
                     </motion.div>
                   ))}

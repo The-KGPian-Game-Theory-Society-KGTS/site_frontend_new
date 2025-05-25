@@ -88,11 +88,11 @@ export default function Navbar() {
                   Login
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-                <Link href="/auth/signup" className="bg-blue-500 px-4 py-2 rounded">
+                <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
                   Sign Up
                 </Link>
               </>
-            )}
+            )} 
           </div>
 
           {/* Mobile Navigation Toggle */}
@@ -129,7 +129,7 @@ export default function Navbar() {
                   handleLogout()
                   setIsOpen(false)
                 }}
-                className="bg-red-500 px-4 py-2 rounded"
+                className="bg-red-500 active:scale-95 px-4 py-2 rounded"
               >
                 Logout
               </button>
@@ -139,7 +139,7 @@ export default function Navbar() {
               <Link href="/auth/login" className="text-cream hover:text-red-600 transition-colors py-2" onClick={() => setIsOpen(false)}>
                 Login
               </Link>
-              <Link href="/auth/signup" className="bg-blue-500 px-4 py-2 rounded" onClick={() => setIsOpen(false)}>
+              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded" onClick={() => setIsOpen(false)}>
                 Sign Up
               </Link>
             </>
