@@ -7,29 +7,53 @@ import { useState } from "react"
 import Link from "next/link"
 
 export default function ContactSection() {
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error', message: string } | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   })
+  const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Here you would typically send the data to your backend
-    alert("Thank you for your message! We'll get back to you soon.")
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    })
+    setLoading(true)
+    setFeedback(null)
+
+    const payload = {
+      access_key: "682fa9bd-ab2a-4550-87d1-1287cf02c09e",
+      ...formData,
+    }
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+      const json = await res.json()
+      if (json.success) {
+        setFeedback({ type: 'success', message: 'Thank you for your message! We\'ll get back to you soon.' })
+        setFormData({ name: "", email: "", subject: "", message: "" })
+      } else {
+        setFeedback({ type: 'error', message: 'Something went wrong. Please try again later.' })
+      }
+    } catch (err) {
+      setFeedback({ type: 'error', message: 'Network error. Please check your connection and try again.' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -132,7 +156,7 @@ export default function ContactSection() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-cream/80 mb-1">
+                  <label htmlFor="name" className="block text-cream mb-2">
                     Your Name
                   </label>
                   <input
@@ -142,12 +166,12 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 bg-black/50 border border-[#8B0000]/30 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B0000] focus:border-transparent text-cream"
+                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                    placeholder="Enter your name"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-cream/80 mb-1">
+                  <label htmlFor="email" className="block text-cream mb-2">
                     Your Email
                   </label>
                   <input
@@ -157,13 +181,28 @@ export default function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 bg-black/50 border border-[#8B0000]/30 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B0000] focus:border-transparent text-cream"
+                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                    placeholder="Enter your email"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-cream/80 mb-1">
-                    Your Message
+                  <label htmlFor="subject" className="block text-cream mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                    placeholder="Enter your subject"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-cream mb-2">
+                    Message
                   </label>
                   <textarea
                     id="message"
@@ -171,10 +210,16 @@ export default function ContactSection() {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    rows={3}
-                    className="w-full px-4 py-2 bg-black/50 border border-[#8B0000]/30 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B0000] focus:border-transparent text-cream resize-none"
-                  ></textarea>
+                    rows={4}
+                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream resize-none"
+                    placeholder="Enter your message"
+                  />
                 </div>
+                {feedback && (
+                  <p className={`text-center ${feedback.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                    {feedback.message}
+                  </p>
+                )}
 
                 <div className="flex items-center justify-between">
                   <button

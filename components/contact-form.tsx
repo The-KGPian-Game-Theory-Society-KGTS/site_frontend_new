@@ -3,12 +3,14 @@
 import { useState } from "react"
 
 export default function ContactForm() {
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error', message: string } | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   })
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -18,12 +20,36 @@ export default function ContactForm() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Here you would typically send the form data to your backend
-    alert("Thank you for your message! We'll get back to you soon.")
-    setFormData({ name: "", email: "", subject: "", message: "" })
+    setLoading(true)
+    setFeedback(null)
+
+    const payload = {
+      access_key: "682fa9bd-ab2a-4550-87d1-1287cf02c09e", 
+      ...formData,
+    }
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+      const json = await res.json()
+      if (json.success) {
+        setFeedback({ type: 'success', message: 'Thank you for your message! We\'ll get back to you soon.' })
+        setFormData({ name: "", email: "", subject: "", message: "" })
+      } else {
+        setFeedback({ type: 'error', message: 'Something went wrong. Please try again later.' })
+      }
+    } catch (err) {
+      setFeedback({ type: 'error', message: 'Network error. Please check your connection and try again.' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -90,13 +116,19 @@ export default function ContactForm() {
             placeholder="Enter your message"
           />
         </div>
+        {feedback && (
+          <p className={`text-center ${feedback.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+            {feedback.message}
+          </p>
+        )}
         <button
           type="submit"
-          className="w-full px-6 py-3 bg-red-600 text-cream rounded-md font-medium hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.5)] hover:shadow-[0_0_20px_rgba(255,0,0,0.7)]"
+          disabled={loading}
+          className="w-full px-6 py-3 bg-red-600 text-cream rounded-md font-medium hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.5)] hover:shadow-[0_0_20px_rgba(255,0,0,0.7)] disabled:opacity-50"
         >
-          Send Message
+          {loading ? 'Sending...' : 'Send Message'}
         </button>
       </form>
     </div>
   )
-} 
+}
