@@ -89,33 +89,30 @@ export default function ContactSection() {
             <h3 className="text-2xl font-serif font-bold text-cream mb-6">Get in Touch</h3>
 
             <div className="space-y-6">
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
                   <Instagram size={18} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium text-cream">Instagram</h4>
-                  <p className="text-cream/70">@kgpgametheory</p>
+                  <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.instagram.com/kgts.iitkgp?igsh=M2ZxZTNzM2V6cDFv">Instagram</a>
                 </div>
               </div>
 
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
                   <Facebook size={18} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium text-cream">Facebook</h4>
-                  <p className="text-cream/70">@kgpgametheory</p>
+                  <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.facebook.com/The.KGTS?mibextid=rS40aB7S9Ucbxw6v">Facebook</a>
                 </div>
               </div>
 
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
                   <Linkedin size={18} />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium text-cream">LinkedIn</h4>
-                  <p className="text-cream/70">@kgpgametheory</p>
+                  <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.linkedin.com/company/the-kgts/">LinkedIn</a>
                 </div>
               </div>
 

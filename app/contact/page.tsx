@@ -28,8 +28,8 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-serif font-bold text-cream mb-2">Instagram</h3>
               <p className="text-cream/80 mb-4">Follow us for updates and announcements</p>
-              <a href="https://instagram.com/kgpgametheory" className="text-red-500 hover:text-red-400 transition-colors">
-                @kgpgametheory
+              <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/kgts.iitkgp?igsh=M2ZxZTNzM2V6cDFv" className="text-red-500 hover:text-red-400 transition-colors">
+                @kgts.iitkgp
               </a>
             </div>
 
@@ -39,8 +39,8 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-serif font-bold text-cream mb-2">Facebook</h3>
               <p className="text-cream/80 mb-4">Connect with us on Facebook</p>
-              <a href="https://facebook.com/kgpgametheory" className="text-red-500 hover:text-red-400 transition-colors">
-                @kgpgametheory
+              <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/The.KGTS?mibextid=rS40aB7S9Ucbxw6v" className="text-red-500 hover:text-red-400 transition-colors">
+                @TheKGpianGameTheorySociety
               </a>
             </div>
 
@@ -50,8 +50,8 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-serif font-bold text-cream mb-2">LinkedIn</h3>
               <p className="text-cream/80 mb-4">Connect with us professionally</p>
-              <a href="https://linkedin.com/company/kgpgametheory" className="text-red-500 hover:text-red-400 transition-colors">
-                @kgpgametheory
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/the-kgts/" className="text-red-500 hover:text-red-400 transition-colors">
+                @TheKGpianGameTheorySociety
               </a>
             </div>
 
