@@ -25,10 +25,6 @@ export default function BlackHolePage() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-cream mb-4">
                 Black <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Hole</span>
               </h1>
-              <p className="text-cream/80 max-w-2xl">
-                A strategic board game where players compete to minimize their exposure to the gravitational pull of the black hole.
-                Place your numbered tiles wisely - the player with the lowest sum of values adjacent to the black hole wins!
-              </p>
             </div>
 
             <div className="bg-black/70 border border-red-600/30 rounded-lg p-6 backdrop-blur-sm">

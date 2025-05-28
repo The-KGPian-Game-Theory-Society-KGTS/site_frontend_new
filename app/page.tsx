@@ -3,7 +3,6 @@ import Hero from "@/components/hero"
 import AboutSection from "@/components/about-section"
 import EventsSection from "@/components/events-section"
 import BlogSection from "@/components/blog-section"
-import GamesSection from "@/components/games-section"
 import ContactSection from "@/components/contact-section"
 import FloatingIcons from "@/components/floating-icons"
 
@@ -18,7 +17,6 @@ export default function Home() {
         <AboutSection />
         <EventsSection />
         <BlogSection />
-        <GamesSection />
         <ContactSection />
       </main>
       <footer className="border-t border-red-600/30 py-6 text-center text-sm text-cream/60 relative z-10">
