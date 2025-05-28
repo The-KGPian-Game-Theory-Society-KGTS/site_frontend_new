@@ -221,12 +221,13 @@ export default function ContactSection() {
                   </p>
                 )}
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)]"
+                    disabled={loading}
+                    className="w-full sm:w-auto px-6 py-2 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Send Message
+                    {loading ? 'Sending...' : 'Send Message'}
                   </button>
 
                   <Link href="/contact" className="text-[#8B0000] hover:text-[#A52A2A] transition-colors text-sm">
