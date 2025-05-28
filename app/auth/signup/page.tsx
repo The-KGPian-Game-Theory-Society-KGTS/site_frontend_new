@@ -115,7 +115,7 @@ export default function SignupPage() {
               disabled={loading}
             />
           </div>
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition duration-300" disabled={loading}>
+          <button type="submit" className="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition duration-300" disabled={loading}>
             {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
