@@ -16,9 +16,19 @@ type FloatingIcon = {
 export default function FloatingIcons() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [mounted, setMounted] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    // Check if screen width is desktop size (1024px or larger)
+    setIsDesktop(window.innerWidth >= 1024)
+    
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   useEffect(() => {
@@ -63,10 +73,13 @@ export default function FloatingIcons() {
     const icons: FloatingIcon[] = []
     for (let i = 0; i < 60; i++) {
       const seed = i * 0.1
+      // Adjust size based on screen size
+      const baseSize = isDesktop ? 20 : 12 // Larger base size for desktop
+      const sizeVariation = isDesktop ? 30 : 20 // Larger variation for desktop
       icons.push({
         x: seededRandom(seed) * canvas.width,
         y: seededRandom(seed + 1) * canvas.height,
-        size: 12 + seededRandom(seed + 2) * 20,
+        size: baseSize + seededRandom(seed + 2) * sizeVariation,
         speed: 0.3 + seededRandom(seed + 3) * 0.5,
         symbol: symbols[Math.floor(seededRandom(seed + 4) * symbols.length)],
         opacity: 0.15 + seededRandom(seed + 5) * 0.2,
@@ -95,11 +108,11 @@ export default function FloatingIcons() {
             icon.symbol === "Σ" || icon.symbol === "∀") {
           ctx.fillStyle = `rgba(255, 0, 0, ${icon.opacity})`
           ctx.shadowColor = "rgba(255, 0, 0, 0.5)"
-          ctx.shadowBlur = 15
+          ctx.shadowBlur = isDesktop ? 20 : 15 // Larger glow for desktop
         } else {
           ctx.fillStyle = `rgba(255, 221, 208, ${icon.opacity})`
           ctx.shadowColor = "rgba(255, 221, 208, 0.3)"
-          ctx.shadowBlur = 10
+          ctx.shadowBlur = isDesktop ? 15 : 10 // Larger glow for desktop
         }
 
         ctx.textAlign = "center"
@@ -127,7 +140,7 @@ export default function FloatingIcons() {
       window.removeEventListener("resize", handleResize)
       cancelAnimationFrame(animationId)
     }
-  }, [mounted])
+  }, [mounted, isDesktop]) // Add isDesktop to dependencies
 
   // Don't render anything on the server
   if (!mounted) return null

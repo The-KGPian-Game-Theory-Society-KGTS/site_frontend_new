@@ -83,7 +83,7 @@ export default function LoginPage() {
               type="text"
               value={emailOrUsername}
               onChange={(e) => setEmailOrUsername(e.target.value)}
-              className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border transition-all duration-300 border-gray-600 rounded bg-black/80 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
               required
               disabled={loading}
             />
@@ -94,7 +94,7 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 border border-gray-600 transition-all duration-300 rounded bg-black/80 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
               required
               disabled={loading}
             />

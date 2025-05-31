@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -97,8 +96,6 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
-      <Navbar />
-
       <main className="pt-24 pb-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="mb-8">
@@ -184,12 +181,6 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
           </article>
         </div>
       </main>
-
-      <footer className="border-t border-red-600/30 py-6 text-center text-sm text-cream/60 relative z-10">
-        <div className="container mx-auto px-4">
-          <p>© {new Date().getFullYear()} The KGPian Game Theory Society. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   )
 }

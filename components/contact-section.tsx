@@ -58,8 +58,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-20 relative">
-      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply z-0" />
-
+    
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

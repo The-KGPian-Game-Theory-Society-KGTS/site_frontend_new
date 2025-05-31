@@ -7,8 +7,7 @@ import Link from "next/link"
 export default function AboutSection() {
   return (
     <section id="about" className="py-20 relative">
-      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
-
+      
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,6 +30,7 @@ export default function AboutSection() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
+            <div>
             <h3 className="text-2xl font-serif font-bold text-cream">Our Mission</h3>
             <p className="text-cream/80 leading-relaxed">
               The KGPian Game Theory Society is dedicated to exploring the fascinating intersection of mathematics,
@@ -47,6 +47,7 @@ export default function AboutSection() {
                 <span>Learn more about our history</span>
                 <ChevronRight className="ml-2 transition-transform duration-300 ease-in-out group-hover:translate-x-1" size={18} />
               </Link>
+            </div>
             </div>
           </motion.div>
 

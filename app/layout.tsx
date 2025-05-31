@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import FloatingIcons from "@/components/floating-icons"
+import Footer from "@/components/footer"
+import Navbar from "@/components/navbar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,11 +24,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={`${inter.className} bg-black min-h-screen`}>
-        <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0" />
-        <FloatingIcons />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <div className="relative z-20">
+          <div className="fixed top-0 left-0 w-screen h-screen bg-[url('/playing-cards-red-glow.png')] bg-no-repeat bg-center bg-cover opacity-[0.15] mix-blend-overlay pointer-events-none z-0" />
+          <FloatingIcons />
+          <div className="relative z-10">
+            <Navbar />
             {children}
+            <Footer />
           </div>
         </ThemeProvider>
       </body>

@@ -60,7 +60,6 @@ export default function EventsSection() {
 
   return (
     <section className="py-16 relative">
-      <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">

@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import { MapPin, Instagram, Facebook, Linkedin } from "lucide-react"
 import ContactForm from "@/components/contact-form"
 
@@ -6,8 +5,6 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
-      <Navbar />
-
       <main className="pt-24 pb-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -40,7 +37,7 @@ export default function ContactPage() {
               <h3 className="text-xl font-serif font-bold text-cream mb-2">Facebook</h3>
               <p className="text-cream/80 mb-4">Connect with us on Facebook</p>
               <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/The.KGTS?mibextid=rS40aB7S9Ucbxw6v" className="text-red-500 hover:text-red-400 transition-colors">
-                @TheKGpianGameTheorySociety
+                @TheKGPianGameTheorySociety
               </a>
             </div>
 
@@ -51,7 +48,7 @@ export default function ContactPage() {
               <h3 className="text-xl font-serif font-bold text-cream mb-2">LinkedIn</h3>
               <p className="text-cream/80 mb-4">Connect with us professionally</p>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/the-kgts/" className="text-red-500 hover:text-red-400 transition-colors">
-                @TheKGpianGameTheorySociety
+                @TheKGPianGameTheorySociety
               </a>
             </div>
 
@@ -90,12 +87,6 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
-      <footer className="border-t border-red-600/30 py-6 text-center text-sm text-cream/60 relative z-10">
-        <div className="container mx-auto px-4">
-          <p>© {new Date().getFullYear()} The KGPian Game Theory Society. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -6,8 +5,6 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen text-cream">
       <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
-      <Navbar />
-
       <main className="pt-24 pb-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -21,24 +18,19 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-serif font-bold text-cream mb-6">Our History</h2>
               <p className="text-cream/80 leading-relaxed mb-4">
-                The KGPian Game Theory Society was founded in 2015 by a group of passionate mathematics and economics
-                students at IIT Kharagpur who shared a common interest in strategic decision-making and its applications
-                across various disciplines.
+                The KGPian Game Theory Society was founded on 19th August 2010 by Manoj Gadia at IIT Kharagpur, with a vision to promote awareness and application of game theory among students across disciplines.
               </p>
               <p className="text-cream/80 leading-relaxed mb-4">
-                What began as informal discussions and problem-solving sessions quickly evolved into a structured
-                organization dedicated to exploring the fascinating world of game theory through workshops,
-                competitions, and collaborative research projects.
+                What started as a student-led initiative with informal sessions and strategic discussions evolved into a dynamic society organizing high-impact events such as Nashify, Treasure Hunt, and the flagship competition Stratathon.
               </p>
               <p className="text-cream/80 leading-relaxed">
-                Over the years, we have grown to become one of the most active academic societies on campus, attracting
-                students from diverse backgrounds including mathematics, economics, computer science, and engineering
-                who are united by their interest in strategic thinking and decision theory.
+                Over the years, KGTS has grown into a vibrant community of over 50 active members, hosting discussions, case studies, and publishing The Strategist newsletter—all centered around cultivating strategic thinking, decision-making, and game theory-based problem solving.
               </p>
             </div>
-            <div className="relative h-80 rounded-lg overflow-hidden shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+
+            <div className="relative h-full rounded-lg overflow-hidden shadow-[0_0_20px_rgba(255,0,0,0.3)]">
               <Image
-                src="/placeholder.svg?height=400&width=600"
+                src="/ManojGadia.jpg?height=400&width=600"
                 alt="KGPian Game Theory Society founding members"
                 fill
                 className="object-cover"
@@ -212,12 +204,6 @@ export default function AboutPage() {
           </div>
         </div>
       </main>
-
-      <footer className="border-t border-red-600/30 py-6 text-center text-sm text-cream/60 relative z-10">
-        <div className="container mx-auto px-4">
-          <p>© {new Date().getFullYear()} The KGPian Game Theory Society. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   )
 }

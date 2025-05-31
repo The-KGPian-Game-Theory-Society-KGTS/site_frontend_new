@@ -41,8 +41,7 @@ export default function BlogSection() {
   if (error || blogs.length === 0) {
     return (
       <section id="blogs" className="py-20 relative">
-        <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
-
+    
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -68,7 +67,6 @@ export default function BlogSection() {
 
   return (
     <section id="blogs" className="py-20 relative">
-      <div className="absolute inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-10 mix-blend-multiply" />
 
       <div className="container mx-auto px-4">
         <motion.div
