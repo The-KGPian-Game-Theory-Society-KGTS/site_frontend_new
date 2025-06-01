@@ -28,14 +28,17 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="relative h-full rounded-lg overflow-hidden shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+            <div className="relative h-96 w-full max-w-lg mx-auto rounded-lg overflow-hidden shadow-[0_0_20px_rgba(255,0,0,0.3)]">
               <Image
-                src="/ManojGadia.jpg?height=400&width=600"
+                src="/ManojGadia.jpg"
                 alt="KGPian Game Theory Society founding members"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
               />
             </div>
+
+
+
           </div>
 
           <div className="bg-black/70 border border-red-600/30 rounded-lg p-8 mb-16">
