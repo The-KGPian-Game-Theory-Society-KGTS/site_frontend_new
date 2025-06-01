@@ -36,7 +36,7 @@ export default function LoginPage() {
 
       // 1️⃣ Email‐not‐verified case
       if (data.success === false &&
-          data.message === "Email not verified. New verification OTP has been sent."
+        data.message === "Email not verified. New verification OTP has been sent."
       ) {
         if (isEmail) {
           localStorage.setItem("email", emailOrUsername.trim());
@@ -70,7 +70,7 @@ export default function LoginPage() {
         </div>
       )}
       <Navbar />
-      <div className={`flex items-center justify-center py-8 ${loading ? 'pointer-events-none select-none blur-sm' : ''}`}>
+      <div className={`flex flex-col items-center justify-center py-8 ${loading ? 'pointer-events-none select-none blur-sm' : ''}`}>
         <form
           onSubmit={handleLogin}
           className="bg-theme-card p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6"
@@ -103,6 +103,13 @@ export default function LoginPage() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="mt-4 text-center text-white">
+          Don&apos;t have an account yet?{" "}
+          <a href="/auth/signup" className="text-red-500 hover:underline">
+            Sign up
+          </a>
+        </p>
+
       </div>
     </div>
   );

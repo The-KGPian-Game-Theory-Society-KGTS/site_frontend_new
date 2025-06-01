@@ -59,7 +59,7 @@ export default function SignupPage() {
         </div>
       )}
       <Navbar />
-      <div className="flex items-center justify-center py-8">
+      <div className="flex flex-col  items-center justify-center py-8">
         <form
           onSubmit={handleSignup}
           className="bg-theme-card p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6"
@@ -119,6 +119,12 @@ export default function SignupPage() {
             {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
+        <div className="mt-4 text-center text-white">
+          Already have an account?{" "}
+          <a href="/auth/login" className="text-red-500 hover:underline">
+            Sign in
+          </a>
+        </div>
       </div>
     </div>
   );
