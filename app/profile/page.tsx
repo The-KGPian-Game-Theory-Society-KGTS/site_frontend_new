@@ -220,7 +220,7 @@ export default function ProfilePage() {
               type="text"
               value={formData.phoneNumber}
               onChange={handleChange}
-              className="w-full p-2 border rounded bg-theme-input text-theme-input-text"
+              className="w-full p-2 border rounded bg-black/80 text-theme-input-text focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             {fieldErrors.phoneNumber && (
               <p className="text-theme-error text-sm mt-1">
@@ -235,7 +235,7 @@ export default function ProfilePage() {
               name="collegeName"
               value={formData.collegeName}
               onChange={handleChange}
-              className="w-full p-2 border rounded bg-theme-input text-theme-input-text"
+              className="w-full p-2 border rounded bg-black/80 text-theme-input-text focus:outline-none focus:ring-2 focus:ring-red-500"
             >
               <option value="">Select college</option>
               <option value="Indian Institute of Technology, Kharagpur">
@@ -258,7 +258,7 @@ export default function ProfilePage() {
                 type="text"
                 value={formData.otherCollege}
                 onChange={handleChange}
-                className="w-full p-2 border rounded bg-theme-input text-theme-input-text"
+                className="w-full p-2 border rounded bg-black/80 text-theme-input-text focus:outline-none focus:ring-2 focus:ring-red-500"
               />
               {fieldErrors.otherCollege && (
                 <p className="text-theme-error text-sm mt-1">
@@ -277,7 +277,7 @@ export default function ProfilePage() {
                   type="text"
                   value={formData.rollNumber}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded bg-theme-input text-theme-input-text"
+                  className="w-full p-2 border rounded bg-black/80 text-theme-input-text focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
               <div className="mb-4">
@@ -287,7 +287,7 @@ export default function ProfilePage() {
                   type="email"
                   value={formData.kgpMail}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded bg-theme-input text-theme-input-text"
+                  className="w-full p-2 border rounded bg-black/80 text-theme-input-text focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
               </div>
             </>
@@ -298,14 +298,14 @@ export default function ProfilePage() {
           <div className="flex space-x-4">
             <button
               type="submit"
-              className="flex-1 bg-theme-button-primary text-white p-3 rounded-lg hover:bg-theme-button-primary-hover transition"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg hover:bg-theme-button-primary-hover transition"
             >
               Save Changes
             </button>
             <button
               type="button"
               onClick={handleLogout}
-              className="flex-1 bg-theme-button-danger text-white p-3 rounded-lg hover:bg-theme-button-danger-hover transition"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg hover:bg-theme-button-danger-hover transition"
             >
               Logout
             </button>

@@ -119,7 +119,7 @@ const teamStructure = {
       },
       {
         role: "Academic Head",
-        name: "Ketan",
+        name: "Ketan Suman",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/ketan",
@@ -139,7 +139,7 @@ const teamStructure = {
       },
       {
         role: "Tech Head",
-        name: "Fazal",
+        name: "Fazal H. Khan",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/fazal",

@@ -12,7 +12,10 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "The KGPian Game Theory Society",
   description: "Where strategy meets probability, and every decision counts",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/kgts-logo.png',
+  }
 }
 
 export default function RootLayout({

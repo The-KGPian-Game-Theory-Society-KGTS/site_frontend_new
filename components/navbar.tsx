@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -53,8 +54,19 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-serif font-bold text-cream hover:text-red-500 transition-colors">
-            <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">K</span>GTS
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
+              <Image
+                src="/kgts-logo.png"
+                alt="KGTS Logo"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <span className="text-2xl font-serif font-bold text-cream hover:text-red-500 transition-colors">
+              <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">K</span>GTS
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
