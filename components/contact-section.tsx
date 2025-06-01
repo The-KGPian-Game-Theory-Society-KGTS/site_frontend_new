@@ -35,6 +35,7 @@ export default function ContactSection() {
     setFeedback(null)
 
     const payload = {
+      // Make sure to use your own access key from web3forms.com
       access_key: "682fa9bd-ab2a-4550-87d1-1287cf02c09e",
       ...formData,
     }
@@ -82,7 +83,8 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        {/* The `items-center` class vertically aligns the two columns for a balanced look */}
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -152,9 +154,10 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
+            {/* The title is moved outside the padded box to align perfectly with "Get in Touch" */}
+            <h3 className="text-2xl font-serif font-bold text-cream mb-6">Quick Message</h3>
             <div className="bg-black/70 border border-[#8B0000]/30 rounded-lg p-6 backdrop-blur-sm">
-              <h3 className="text-2xl font-serif font-bold text-cream mb-6">Quick Message</h3>
-
+              
               {isMounted && (
                 <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
                   <div>
