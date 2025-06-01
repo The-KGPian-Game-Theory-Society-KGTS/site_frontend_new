@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/navbar"
-import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react"
+import { Calendar, Clock, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import { Event } from "@/data/events"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -23,9 +23,17 @@ export default function EventsPage() {
         const normalizedEvents = data.data.events.map((event: Event) => ({
           ...event,
           status: event.status.toLowerCase() === "upcoming" ? "upcoming" :
-                  event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
+            event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
         }));
-        setEvents(normalizedEvents);
+
+        // Sort events by date (newest to oldest)
+        const sortedEvents = normalizedEvents.sort((a: Event, b: Event) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return dateB.getTime() - dateA.getTime();
+        });
+
+        setEvents(sortedEvents);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -38,6 +46,44 @@ export default function EventsPage() {
     filter === "all"
       ? events
       : events.filter((event) => event.status === filter);
+
+  const renderEventButton = (event: Event) => {
+    if (event.status === "completed") {
+      // Past events: show View button only if external link exists
+      if (event.link) {
+        const url = event.link.startsWith('http://') || event.link.startsWith('https://')
+          ? event.link
+          : `https://${event.link}`;
+        return (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
+          >
+            View
+            <ExternalLink className="ml-2" size={16} />
+          </a>
+        );
+      }
+      return null; // No button for past events without link
+    } else if (event.status === "ongoing") {
+      // Ongoing events: show Register button
+      return (
+        <button className="px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]">
+          Register Now
+        </button>
+      );
+    } else if (event.status === "upcoming") {
+      // Upcoming events: show Coming Soon text
+      return (
+        <div className="text-cream/60 text-sm font-medium">
+          Coming Soon
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="min-h-screen text-cream">
@@ -140,6 +186,10 @@ export default function EventsPage() {
                           {event.description}
                         </p>
                       </div>
+                    </div>
+
+                    <div className="mt-6">
+                      {renderEventButton(event)}
                     </div>
                   </div>
                 </div>
