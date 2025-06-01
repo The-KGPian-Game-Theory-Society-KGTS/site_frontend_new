@@ -119,7 +119,7 @@ export default function EventsSection() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">
-            Current <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Events</span>
+            Latest <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Events</span>
           </h2>
           <div className="w-20 h-1 bg-red-600 mx-auto"></div>
           <p className="text-cream/80 mt-6 max-w-2xl mx-auto">

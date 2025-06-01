@@ -3,7 +3,7 @@
 import type React from "react"
 import { motion } from "framer-motion"
 import { MapPin, Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 
 export default function ContactSection() {
@@ -15,6 +15,11 @@ export default function ContactSection() {
     message: "",
   })
   const [loading, setLoading] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -150,87 +155,94 @@ export default function ContactSection() {
             <div className="bg-black/70 border border-[#8B0000]/30 rounded-lg p-6 backdrop-blur-sm">
               <h3 className="text-2xl font-serif font-bold text-cream mb-6">Quick Message</h3>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-cream mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-cream mb-2">
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block text-cream mb-2">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
-                    placeholder="Enter your subject"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-cream mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream resize-none"
-                    placeholder="Enter your message"
-                  />
-                </div>
-                {feedback && (
-                  <p className={`text-center ${feedback.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
-                    {feedback.message}
-                  </p>
-                )}
+              {isMounted && (
+                <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
+                  <div>
+                    <label htmlFor="name" className="block text-cream mb-2">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                      placeholder="Enter your name"
+                      suppressHydrationWarning
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-cream mb-2">
+                      Your Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                      placeholder="Enter your email"
+                      suppressHydrationWarning
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="subject" className="block text-cream mb-2">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream"
+                      placeholder="Enter your subject"
+                      suppressHydrationWarning
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-cream mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      className="w-full px-4 py-2 bg-black/50 border border-red-600/30 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600/50 text-cream resize-none"
+                      placeholder="Enter your message"
+                      suppressHydrationWarning
+                    />
+                  </div>
+                  {feedback && (
+                    <p className={`text-center ${feedback.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                      {feedback.message}
+                    </p>
+                  )}
 
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full sm:w-auto px-6 py-2 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)] disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {loading ? 'Sending...' : 'Send Message'}
-                  </button>
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full sm:w-auto px-6 py-2 bg-[#8B0000] text-cream rounded-md font-medium hover:bg-[#A52A2A] transition-colors shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:shadow-[0_0_20px_rgba(139,0,0,0.7)] disabled:opacity-50 disabled:cursor-not-allowed"
+                      suppressHydrationWarning
+                    >
+                      {loading ? 'Sending...' : 'Send Message'}
+                    </button>
 
-                  <Link href="/contact" className="text-[#8B0000] hover:text-[#A52A2A] transition-colors text-sm">
-                    Contact page →
-                  </Link>
-                </div>
-              </form>
+                    <Link href="/contact" className="text-[#8B0000] hover:text-[#A52A2A] transition-colors text-sm">
+                      Contact page →
+                    </Link>
+                  </div>
+                </form>
+              )}
             </div>
           </motion.div>
         </div>

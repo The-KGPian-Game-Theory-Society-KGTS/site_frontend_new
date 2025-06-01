@@ -60,8 +60,10 @@ export default function Navbar() {
                 src="/kgts-logo.png"
                 alt="KGTS Logo"
                 fill
+                sizes="40px"
                 className="object-cover"
                 priority
+                loading="eager"
               />
             </div>
             <span className="text-2xl font-serif font-bold text-cream hover:text-red-500 transition-colors">
