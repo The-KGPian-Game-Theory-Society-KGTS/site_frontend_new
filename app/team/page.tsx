@@ -201,6 +201,12 @@ const teamStructure = {
   },
 }
 
+// Grouping department members for structured layout
+const academicHeads = teamStructure.departments.members.filter(m => m.role === "Academic Head");
+const techDesignHeads = teamStructure.departments.members.filter(m => m.role === "Tech Head" || m.role === "Design Head");
+const otherHeads = teamStructure.departments.members.filter(m => m.role === "Sponsorship Head" || m.role === "Media and Public Relations Head");
+
+
 export default function TeamPage() {
   return (
     <div className="min-h-screen text-cream">
@@ -219,140 +225,25 @@ export default function TeamPage() {
           </div>
 
           {/* Leadership Section */}
-          <div className="mb-16">
+          <section className="mb-16">
             <h2 className="text-3xl font-serif font-bold text-cream mb-8 text-center">
               {teamStructure.leadership.title}
             </h2>
-            <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto">
-              {/* President */}
-              <div className="w-48">
-                <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={teamStructure.leadership.members[0].image}
-                      alt={teamStructure.leadership.members[0].name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    {/* Dark overlay on hover */}
-                    <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                      <Link href={teamStructure.leadership.members[0].social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <FaLinkedin size={32} />
-                      </Link>
-                      <Link href={teamStructure.leadership.members[0].social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <SiGmail size={32} />
-                      </Link>
-                      <Link href={teamStructure.leadership.members[0].social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <FaInstagram size={32} />
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="p-4 h-24 flex flex-col justify-between relative">
-                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                    <div className="relative z-10">
-                      <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                        {teamStructure.leadership.members[0].name}
-                      </h3>
-                      <p className="text-red-500 text-sm">{teamStructure.leadership.members[0].role}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Vice President */}
-              <div className="w-48">
-                <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={teamStructure.leadership.members[1].image}
-                      alt={teamStructure.leadership.members[1].name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    {/* Dark overlay on hover */}
-                    <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                      <Link href={teamStructure.leadership.members[1].social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <FaLinkedin size={32} />
-                      </Link>
-                      <Link href={teamStructure.leadership.members[1].social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <SiGmail size={32} />
-                      </Link>
-                      <Link href={teamStructure.leadership.members[1].social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                        <FaInstagram size={32} />
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="p-4 h-24 flex flex-col justify-between relative">
-                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                    <div className="relative z-10">
-                      <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                        {teamStructure.leadership.members[1].name}
-                      </h3>
-                      <p className="text-red-500 text-sm">{teamStructure.leadership.members[1].role}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Advisors */}
-              <div className="flex justify-center gap-8 flex-wrap">
-                {teamStructure.leadership.members.slice(2).map((member, index) => (
-                  <div key={index} className="w-48">
-                    <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                      <div className="relative h-64 overflow-hidden">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        {/* Dark overlay with social icons */}
-                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                          <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                            <FaLinkedin size={32} />
-                          </Link>
-                          <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                            <SiGmail size={32} />
-                          </Link>
-                          <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                            <FaInstagram size={32} />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="p-4 h-24 flex flex-col justify-between relative">
-                        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                        <div className="relative z-10">
-                          <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                            {member.name}
-                          </h3>
-                          <p className="text-red-500 text-sm">{member.role}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* General Secretaries Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-serif font-bold text-cream mb-8 text-center">
-              {teamStructure.secretaries.title}
-            </h2>
-            <div className="flex justify-center gap-8 max-w-7xl mx-auto">
-              {teamStructure.secretaries.members.map((member, index) => (
-                <div key={index} className="w-48">
+            {/* President and Vice President Row */}
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-12">
+              {[teamStructure.leadership.members[0], teamStructure.leadership.members[1]].map((member, index) => (
+                <div key={member.name + index} className="w-48">
                   <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
                     <div className="relative h-64 overflow-hidden">
                       <Image
                         src={member.image}
                         alt={member.name}
                         fill
+                        sizes="12rem"
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      {/* Dark overlay on hover */}
-                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
                         <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
                           <FaLinkedin size={32} />
                         </Link>
@@ -364,7 +255,7 @@ export default function TeamPage() {
                         </Link>
                       </div>
                     </div>
-                    <div className="p-4 h-24 flex flex-col justify-between relative">
+                    <div className="p-4 h-24 flex flex-col justify-center text-center relative">
                       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
                       <div className="relative z-10">
                         <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
@@ -377,138 +268,217 @@ export default function TeamPage() {
                 </div>
               ))}
             </div>
-          </div>
+
+            {/* Advisors Row */}
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8 max-w-5xl mx-auto">
+              {teamStructure.leadership.members.slice(2).map((member, index) => (
+                <div key={member.name + index} className="w-48">
+                  <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="12rem"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
+                        <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <FaLinkedin size={32} />
+                        </Link>
+                        <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <SiGmail size={32} />
+                        </Link>
+                        <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <FaInstagram size={32} />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="p-4 h-24 flex flex-col justify-center text-center relative">
+                      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                      <div className="relative z-10">
+                        <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
+                          {member.name}
+                        </h3>
+                        <p className="text-red-500 text-sm">{member.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* General Secretaries Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-serif font-bold text-cream mb-8 text-center">
+              {teamStructure.secretaries.title}
+            </h2>
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8 max-w-3xl mx-auto">
+              {teamStructure.secretaries.members.map((member, index) => (
+                <div key={index} className="w-48">
+                  <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="12rem"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
+                        <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <FaLinkedin size={32} />
+                        </Link>
+                        <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <SiGmail size={32} />
+                        </Link>
+                        <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                          <FaInstagram size={32} />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="p-4 h-24 flex flex-col justify-center text-center relative">
+                      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                      <div className="relative z-10">
+                        <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
+                          {member.name}
+                        </h3>
+                        <p className="text-red-500 text-sm">{member.role}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* Department Heads Section */}
-          <div>
+          <section>
             <h2 className="text-3xl font-serif font-bold text-cream mb-8 text-center">
               {teamStructure.departments.title}
             </h2>
-            <div className="flex flex-col gap-8 max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto">
+              
               {/* Academic Heads */}
-              <div className="flex justify-center gap-8">
-                {teamStructure.departments.members
-                  .filter(member => member.role === "Academic Head")
-                  .map((member, index) => (
-                    <div key={index} className="w-48">
-                      <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                        <div className="relative h-64 overflow-hidden">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                          {/* Dark overlay on hover */}
-                          <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                            <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaLinkedin size={32} />
-                            </Link>
-                            <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <SiGmail size={32} />
-                            </Link>
-                            <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaInstagram size={32} />
-                            </Link>
-                          </div>
+              <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-8">
+                {academicHeads.map((member, index) => (
+                  <div key={index} className="w-48">
+                    <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
+                      <div className="relative h-64 overflow-hidden">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="12rem"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
+                          <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaLinkedin size={32} />
+                          </Link>
+                          <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <SiGmail size={32} />
+                          </Link>
+                          <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaInstagram size={32} />
+                          </Link>
                         </div>
-                        <div className="p-4 h-24 flex flex-col justify-between relative">
-                          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                          <div className="relative z-10">
-                            <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                              {member.name}
-                            </h3>
-                            <p className="text-red-500 text-sm">{member.role}</p>
-                          </div>
+                      </div>
+                      <div className="p-4 h-24 flex flex-col justify-center text-center relative">
+                        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10">
+                          <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
+                            {member.name}
+                          </h3>
+                          <p className="text-red-500 text-sm">{member.role}</p>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Tech & Design Heads */}
+              <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-8">
+                {techDesignHeads.map((member, index) => (
+                  <div key={index} className="w-48">
+                    <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
+                      <div className="relative h-64 overflow-hidden">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="12rem"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
+                          <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaLinkedin size={32} />
+                          </Link>
+                          <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <SiGmail size={32} />
+                          </Link>
+                          <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaInstagram size={32} />
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="p-4 h-24 flex flex-col justify-center text-center relative">
+                        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10">
+                          <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
+                            {member.name}
+                          </h3>
+                          <p className="text-red-500 text-sm">{member.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {/* Tech Heads And Design Heads*/}
-              <div className="flex justify-center gap-8">
-                {teamStructure.departments.members
-                  .filter(member => member.role === "Tech Head" || member.role === "Design Head")
-                  .map((member, index) => (
-                    <div key={index} className="w-48">
-                      <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                        <div className="relative h-64 overflow-hidden">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                          {/* Dark overlay on hover */}
-                          <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                            <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaLinkedin size={32} />
-                            </Link>
-                            <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <SiGmail size={32} />
-                            </Link>
-                            <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaInstagram size={32} />
-                            </Link>
-                          </div>
+              {/* Sponsorship & Media Heads */}
+              <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+                {otherHeads.map((member, index) => (
+                  <div key={index} className="w-48">
+                    <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
+                      <div className="relative h-64 overflow-hidden">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          fill
+                          sizes="12rem"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-x-6">
+                          <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaLinkedin size={32} />
+                          </Link>
+                          <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <SiGmail size={32} />
+                          </Link>
+                          <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
+                            <FaInstagram size={32} />
+                          </Link>
                         </div>
-                        <div className="p-4 h-24 flex flex-col justify-between relative">
-                          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                          <div className="relative z-10">
-                            <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                              {member.name}
-                            </h3>
-                            <p className="text-red-500 text-sm">{member.role}</p>
-                          </div>
+                      </div>
+                      <div className="p-4 h-24 flex flex-col justify-center text-center relative">
+                        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                        <div className="relative z-10">
+                          <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
+                            {member.name}
+                          </h3>
+                          <p className="text-red-500 text-sm">{member.role}</p>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
 
-              {/* Sponsorship Head And Media and Public Relations Head*/}
-              <div className="flex justify-center gap-8">
-                {teamStructure.departments.members
-                  .filter(member => member.role === "Sponsorship Head" || member.role === "Media and Public Relations Head")
-                  .map((member, index) => (
-                    <div key={index} className="w-48">
-                      <div className="bg-black/70 border-2 border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group relative">
-                        <div className="relative h-64 overflow-hidden">
-                          <Image
-                            src={member.image}
-                            alt={member.name}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                          {/* Dark overlay on hover */}
-                          <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-6">
-                            <Link href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaLinkedin size={32} />
-                            </Link>
-                            <Link href={member.social.gmail} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <SiGmail size={32} />
-                            </Link>
-                            <Link href={member.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream hover:text-red-500 transition-colors transform hover:scale-110">
-                              <FaInstagram size={32} />
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="p-4 h-24 flex flex-col justify-between relative">
-                          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-                          <div className="relative z-10">
-                            <h3 className="text-lg font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-1">
-                              {member.name}
-                            </h3>
-                            <p className="text-red-500 text-sm">{member.role}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
             </div>
-          </div>
+          </section>
         </div>
       </main>
     </div>
