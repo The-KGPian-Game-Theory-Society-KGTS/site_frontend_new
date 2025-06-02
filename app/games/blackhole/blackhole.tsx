@@ -358,13 +358,13 @@ const BlackHoleGame = () => {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.2 }}
                       className={`
-                        w-12 h-12 sm:w-16 sm:h-16 flex justify-center items-center rounded-full cursor-pointer
+                        w-12 h-12 sm:w-16 sm:h-16 flex justify-center items-center cursor-pointer
                         transition-all duration-200
-                        border-2
                         ${timeoutWinner ? 'opacity-50 pointer-events-none' : ''}
-                        ${isGameOver && cellIndex === blackHoleIndex ? 'bg-red-900/50 border-red-500 shadow-[0_0_15px_rgba(255,0,0,0.3)]' : 
-                          board[cellIndex] ? 'bg-black/50 border-red-400' : 
-                          'bg-black/30 border-red-600/80 hover:bg-red-900/20'}
+                        ${isGameOver && cellIndex === blackHoleIndex ? 'bg-red-900/50 shadow-[0_0_15px_rgba(255,0,0,0.3)]' : 
+                          board[cellIndex] ? 'bg-red-500/20' : 
+                          'bg-red-500/30 hover:bg-red-600/40'}
+                        clip-path-hexagon
                       `}
                       onClick={() => !timeoutWinner && placeTile(cellIndex)}
                     >

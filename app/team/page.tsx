@@ -179,7 +179,7 @@ const teamStructure = {
       },
       {
         role: "Sponsorship Head",
-        name: "Dishil",
+        name: "Dishil Z.",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/dishil",
