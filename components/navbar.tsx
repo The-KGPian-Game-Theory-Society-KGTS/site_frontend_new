@@ -56,7 +56,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
               <Image
-                src="/kgts-logo.png"
+                src="/new-logo.png"
                 alt="KGTS Logo"
                 fill
                 sizes="40px"
