@@ -14,9 +14,9 @@ export default function AboutPage() {
             <div className="w-20 h-1 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <h2 className="text-3xl font-serif font-bold text-cream mb-6">Our History</h2>
+          <div className="max-w-4xl mx-auto mb-16">
+            <h2 className="text-3xl font-serif font-bold text-cream mb-6 text-center">Our History</h2>
+            <div className="bg-black/70 border border-red-600/30 rounded-lg p-8">
               <p className="text-cream/80 leading-relaxed mb-4">
                 The KGPian Game Theory Society was founded on 19th August 2010 by Manoj Gadia at IIT Kharagpur, with a vision to promote awareness and application of game theory among students across disciplines.
               </p>
@@ -27,18 +27,6 @@ export default function AboutPage() {
                 Over the years, KGTS has grown into a vibrant community of over 50 active members, hosting discussions, case studies, and publishing The Strategist newsletter—all centered around cultivating strategic thinking, decision-making, and game theory-based problem solving.
               </p>
             </div>
-
-            <div className="relative h-96 w-full max-w-lg mx-auto rounded-lg overflow-hidden shadow-[0_0_20px_rgba(255,0,0,0.3)]">
-              <Image
-                src="/ManojGadia.jpg"
-                alt="KGPian Game Theory Society founding members"
-                fill
-                className="object-cover object-top"
-              />
-            </div>
-
-
-
           </div>
 
           <div className="bg-black/70 border border-red-600/30 rounded-lg p-8 mb-16">
