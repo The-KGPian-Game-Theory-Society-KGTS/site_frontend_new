@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/kgts-logo.png',
+        url: '/new-logo.png',
         type: 'image/png',
         sizes: '32x32',
       }
