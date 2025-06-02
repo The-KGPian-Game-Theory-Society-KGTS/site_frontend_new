@@ -136,16 +136,6 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-
-            <div className="pt-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-4 py-2 rounded-md text-[#8B0000] hover:text-[#A52A2A] hover:bg-[#8B0000]/10 transition-all cursor-pointer relative z-50 group"
-              >
-                <span>View detailed contact information</span>
-                <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" size={18} />
-              </Link>
-            </div>
           </motion.div>
 
           <motion.div
@@ -239,10 +229,6 @@ export default function ContactSection() {
                     >
                       {loading ? 'Sending...' : 'Send Message'}
                     </button>
-
-                    <Link href="/contact" className="text-[#8B0000] hover:text-[#A52A2A] transition-colors text-sm">
-                      Contact page →
-                    </Link>
                   </div>
                 </form>
               )}

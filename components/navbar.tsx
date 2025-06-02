@@ -13,7 +13,6 @@ const navLinks = [
   { name: "Games", href: "/games" },
   { name: "About Us", href: "/about" },
   { name: "Team", href: "/team" },
-  { name: "Contact Us", href: "/contact" },
 ]
 
 export default function Navbar() {
