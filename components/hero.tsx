@@ -77,7 +77,7 @@ export default function Hero() {
       particles.push({
         x: cellX * cellWidth + randomX,
         y: cellY * cellHeight + randomY,
-        size: Math.random() * 20 + 10,
+        size: Math.random() * (window.innerWidth > 1024 ? 35 : 20) + (window.innerWidth > 1024 ? 15 : 10),
         speedX: (Math.random() - 0.5) * 1.2,
         speedY: (Math.random() - 0.5) * 1.2,
         color: colors[Math.floor(Math.random() * colors.length)],
