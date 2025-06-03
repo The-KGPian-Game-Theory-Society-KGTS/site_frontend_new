@@ -42,7 +42,9 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("accessToken")
     localStorage.removeItem("refreshToken")
-    router.push("/")
+    setTimeout(() => {
+          window.location.href = "/";
+        }, 200);
   }
 
   return (
@@ -97,12 +99,12 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors relative group">
+                {/* <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors relative group">
                   Login
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
-                  Sign Up
+                </Link> */}
+                <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
+                  Sign In
                 </Link>
               </>
             )} 
