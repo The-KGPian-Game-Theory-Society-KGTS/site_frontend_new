@@ -12,7 +12,7 @@ const navLinks = [
   { name: "Blog", href: "/blog" },
   { name: "Games", href: "/games" },
   { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/#contact", isContact: true },
+  { name: "Contact Us", href: "/#contact", isContact: true },
   { name: "Team", href: "/team" },
 ]
 
@@ -50,14 +50,36 @@ export default function Navbar() {
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    router.push('/#contact');
-    // Wait for navigation to complete before scrolling
-    setTimeout(() => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
+    const contactSection = document.getElementById('contact');
+    
+    if (contactSection) {
+      // If we're already on the home page, just scroll
+      if (window.location.pathname === '/') {
         contactSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // If we're on another page, navigate to home and then scroll
+        router.push('/');
+        // Use a MutationObserver to detect when the contact section becomes available
+        const observer = new MutationObserver((mutations, obs) => {
+          const contactSection = document.getElementById('contact');
+          if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+            obs.disconnect(); // Stop observing once we've scrolled
+          }
+        });
+
+        // Start observing the document body for changes
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+
+        // Cleanup observer after 5 seconds if it hasn't found the section
+        setTimeout(() => {
+          observer.disconnect();
+        }, 5000);
       }
-    }, 100);
+    }
   };
 
   return (
@@ -71,7 +93,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
               <Image
-                src="/new-logo.png"
+                src="/kgtsnewlogo.png"
                 alt="KGTS Logo"
                 fill
                 sizes="40px"

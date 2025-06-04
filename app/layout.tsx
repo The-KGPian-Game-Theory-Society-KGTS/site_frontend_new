@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/new-logo.png',
+        url: '/kgtsnewlogo.png',
         type: 'image/png',
-        sizes: '32x32',
+        sizes: 'any',
       }
     ],
   },
@@ -44,7 +44,7 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="/kgts-logo.png"
+          href="/kgtsnewlogo.png"
           as="image"
           type="image/png"
         />

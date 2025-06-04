@@ -60,7 +60,13 @@ export default function FloatingIcons() {
       // Chess pieces
       "♔", "♕", "♖", "♗", "♘", "♙",
       // Dice faces
-      "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"
+      "⚀", "⚁", "⚂", "⚃", "⚄", "⚅",
+      // Set theory symbols
+      "ℝ", "ℕ", "ℤ", "ℚ", "ℂ",
+      // Calculus symbols
+      "∫", "∂", "∞", "∇", "∑", "∏",
+      // Currency symbols
+      "₹", "$", "€", "£", "¥",
     ]
 
     // Create a seeded random number generator
@@ -105,7 +111,11 @@ export default function FloatingIcons() {
         // Add glow effect to red suits and special symbols
         if (icon.symbol === "♥" || icon.symbol === "♦" || 
             icon.symbol === "♔" || icon.symbol === "♕" ||
-            icon.symbol === "Σ" || icon.symbol === "∀") {
+            icon.symbol === "Σ" || icon.symbol === "∀" ||
+            icon.symbol === "↑" || icon.symbol === "↓" ||
+            icon.symbol === "₹" || icon.symbol === "$" ||
+            icon.symbol === "€" || icon.symbol === "£" ||
+            icon.symbol === "¥") {
           ctx.fillStyle = `rgba(255, 0, 0, ${icon.opacity})`
           ctx.shadowColor = "rgba(255, 0, 0, 0.5)"
           ctx.shadowBlur = isDesktop ? 20 : 15 // Larger glow for desktop

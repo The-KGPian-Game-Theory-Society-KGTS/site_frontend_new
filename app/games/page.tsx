@@ -43,7 +43,7 @@ export default function GamesPage() {
               Our <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Games</span>
             </h1>
             <div className="w-20 h-1 bg-red-600 mx-auto"></div>
-            <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
+            <p className="text-cream/80 mt-6 max-w-4xl mx-auto">
               Explore our collection of game theory games that challenge your strategic thinking and decision-making skills.
             </p>
           </div>

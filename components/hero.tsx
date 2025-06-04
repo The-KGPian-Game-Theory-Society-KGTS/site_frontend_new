@@ -55,7 +55,13 @@ export default function Hero() {
       // Chess pieces (using Unicode chess symbols)
       "♔", "♕", "♖", "♗", "♘", "♙",
       // Dice faces
-      "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"
+      "⚀", "⚁", "⚂", "⚃", "⚄", "⚅",
+      // Set theory symbols
+      "ℝ", "ℕ", "ℤ", "ℚ", "ℂ",
+      // Calculus symbols
+      "∫", "∂", "∞", "∇", "∑", "∏",
+      // Currency symbols
+      "₹", "$", "€", "£", "¥",
     ]
     const colors = ["#ff0000", "#FFFDD0", "#ff3333"]
 
@@ -132,7 +138,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Playing Cards Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute inset-0 z-0">
         <Image
           src="/playing-cards-red-glow.png"
           alt="Playing cards with red glow"
@@ -140,10 +146,10 @@ export default function Hero() {
           className="object-cover opacity-70"
           priority
         />
-      </div>
+      </div> */}
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 z-10 bg-black/50" />
+      {/* <div className="absolute inset-0 z-10 bg-black/50" /> */}
 
       {/* Background Canvas for Floating Symbols */}
       <canvas ref={canvasRef} className="absolute inset-0 z-20 opacity-80" />
@@ -158,7 +164,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="mb-6"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-cream mb-4 tracking-tight text-glow-red">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-cream mb-4 tracking-tight text-red">
             The <span className="text-[#8B0000]">KGPian</span> Game Theory Society
           </h1>
           <p className="text-xl md:text-2xl text-cream/90 max-w-3xl mx-auto">
