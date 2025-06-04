@@ -71,6 +71,9 @@ const BlackHoleGame = () => {
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(null);
   const [timeoutWinner, setTimeoutWinner] = useState<1 | 2 | null>(null);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  // Player names
+  const [player1Name, setPlayer1Name] = useState("Player 1");
+  const [player2Name, setPlayer2Name] = useState("Player 2");
 
   const getRingDescription = (ring: number): string => {
     switch (ring) {
@@ -203,13 +206,13 @@ const BlackHoleGame = () => {
 
     // Check each ring independently
     const ringScores: { p1: number; p2: number }[] = [];
-    
+
     // Calculate scores for each ring (up to 4 rings)
     for (let ring = 1; ring <= 4; ring++) {
       const ringTiles = getTilesAtDistance(blackHoleIndex, ring);
       const scores = calculateScoreForRing(ringTiles);
       ringScores[ring] = scores;
-      
+
       // If this ring has different scores, we have a winner
       if (scores.p1 !== scores.p2) {
         return {
@@ -219,16 +222,16 @@ const BlackHoleGame = () => {
         };
       }
     }
-    
+
     // If we get here, we need to check accumulated scores
     let totalP1 = 0;
     let totalP2 = 0;
-    
+
     for (let ring = 1; ring <= 4; ring++) {
       if (ringScores[ring]) {
         totalP1 += ringScores[ring].p1;
         totalP2 += ringScores[ring].p2;
-        
+
         // Check if we have a winner at this accumulated level
         if (totalP1 !== totalP2) {
           return {
@@ -239,7 +242,7 @@ const BlackHoleGame = () => {
         }
       }
     }
-    
+
     // If we get here, all rings are tied
     return {
       p1: totalP1,
@@ -308,16 +311,40 @@ const BlackHoleGame = () => {
       )}
       {!ready ? (
         <div className="text-center space-y-4">
-          <div className="flex flex-col items-center gap-2 mb-4">
-            <label className="text-cream text-base sm:text-lg">Set total time per player (minutes):</label>
-            <input
-              type="number"
-              min={1}
-              max={30}
-              value={initialTime}
-              onChange={e => setInitialTime(Number(e.target.value))}
-              className="w-20 sm:w-24 px-2 py-1 rounded border border-red-400 bg-black text-cream text-center"
-            />
+          <div className="flex flex-col items-center gap-4 mb-4">
+            <div className="flex flex-col md:flex-row md:gap-x-4 items-center gap-2">
+              <div className="flex flex-col items-center gap-2">
+                <label className="text-cream text-base sm:text-lg">Player 1 Name:</label>
+                <input
+                  type="text"
+                  value={player1Name}
+                  onChange={e => setPlayer1Name(e.target.value || "Player 1")}
+                  placeholder="Player 1"
+                  className="w-48 sm:w-56 px-3 py-2 rounded border border-red-400 bg-black text-cream text-center focus:outline-none focus:ring-2 focus:ring-red-400"
+                />
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <label className="text-cream text-base sm:text-lg">Player 2 Name:</label>
+                <input
+                  type="text"
+                  value={player2Name}
+                  onChange={e => setPlayer2Name(e.target.value || "Player 2")}
+                  placeholder="Player 2"
+                  className="w-48 sm:w-56 px-3 py-2 rounded border border-red-400 bg-black text-cream text-center focus:outline-none focus:ring-2 focus:ring-red-400"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <label className="text-cream text-base sm:text-lg">Set total time per player (minutes):</label>
+              <input
+                type="number"
+                min={1}
+                max={30}
+                value={initialTime}
+                onChange={e => setInitialTime(Number(e.target.value))}
+                className="w-20 sm:w-24 px-2 py-1 rounded border border-red-400 bg-black text-cream text-center"
+              />
+            </div>
           </div>
           <button
             onClick={startGame}
@@ -342,15 +369,15 @@ const BlackHoleGame = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full mt-4">
             {/* Player 1 on the left/top */}
             <div className="flex-1 flex flex-col items-center sm:items-end">
-              <div className={`p-3 sm:p-4 rounded-lg w-28 sm:w-36 text-center ${playerTurn === 1 ? 'bg-red-900/30 border-2 border-red-500' : 'bg-black/30'}`}> 
-                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2">Player 1</h3>
-                <div className="text-xs sm:text-sm text-cream/80">Time: {Math.floor(p1Time/60)}:{(p1Time%60).toString().padStart(2,'0')}</div>
+              <div className={`p-3 sm:p-4 rounded-lg w-28 sm:w-36 text-center ${playerTurn === 1 ? 'bg-red-900/30 border-2 border-red-500' : 'bg-black/30'}`}>
+                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2">{player1Name}</h3>
+                <div className="text-xs sm:text-sm text-cream/80">Time: {Math.floor(p1Time / 60)}:{(p1Time % 60).toString().padStart(2, '0')}</div>
               </div>
             </div>
             {/* Board in the center */}
-            <div className="flex flex-col items-center gap-1 sm:gap-2">
+            <div className="flex flex-col items-center">
               {TRIANGLE_ROWS.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex gap-1 sm:gap-2 justify-center">
+                <div key={rowIndex} className="flex gap-1 sm:gap-2 justify-center -mt-2 sm:-mt-3">
                   {row.map((cellIndex) => (
                     <motion.div
                       key={cellIndex}
@@ -361,9 +388,9 @@ const BlackHoleGame = () => {
                         w-12 h-12 sm:w-16 sm:h-16 flex justify-center items-center cursor-pointer
                         transition-all duration-200
                         ${timeoutWinner ? 'opacity-50 pointer-events-none' : ''}
-                        ${isGameOver && cellIndex === blackHoleIndex ? 'bg-red-900/50 shadow-[0_0_15px_rgba(255,0,0,0.3)]' : 
-                          board[cellIndex] ? 'bg-red-500/20' : 
-                          'bg-red-500/30 hover:bg-red-600/40'}
+                        ${isGameOver && cellIndex === blackHoleIndex ? 'bg-red-900/50 shadow-[0_0_15px_rgba(255,0,0,0.3)]' :
+                          board[cellIndex] ? 'bg-red-500/20' :
+                            'bg-red-500/30 hover:bg-red-600/40'}
                         clip-path-hexagon
                       `}
                       onClick={() => !timeoutWinner && placeTile(cellIndex)}
@@ -382,9 +409,9 @@ const BlackHoleGame = () => {
             </div>
             {/* Player 2 on the right/bottom */}
             <div className="flex-1 flex flex-col items-center sm:items-start">
-              <div className={`p-3 sm:p-4 rounded-lg w-28 sm:w-36 text-center ${playerTurn === 2 ? 'bg-red-900/30 border-2 border-red-500' : 'bg-black/30'}`}> 
-                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2">Player 2</h3>
-                <div className="text-xs sm:text-sm text-cream/80">Time: {Math.floor(p2Time/60)}:{(p2Time%60).toString().padStart(2,'0')}</div>
+              <div className={`p-3 sm:p-4 rounded-lg w-28 sm:w-36 text-center ${playerTurn === 2 ? 'bg-red-900/30 border-2 border-red-500' : 'bg-black/30'}`}>
+                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2">{player2Name}</h3>
+                <div className="text-xs sm:text-sm text-cream/80">Time: {Math.floor(p2Time / 60)}:{(p2Time % 60).toString().padStart(2, '0')}</div>
               </div>
             </div>
           </div>
@@ -393,8 +420,8 @@ const BlackHoleGame = () => {
             <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-900/20 border border-red-600/30 rounded-lg text-center">
               <h2 className="text-xl sm:text-2xl font-serif font-bold text-cream mb-2">Game Over</h2>
               <div className="space-y-1 text-base sm:text-lg">
-                <p>Player {timeoutWinner} wins by timeout!</p>
-                <p className="text-lg sm:text-xl font-bold text-red-400 mt-2">Player {timeoutWinner} is the winner!</p>
+                <p>{timeoutWinner === 1 ? player1Name : player2Name} wins by timeout!</p>
+                <p className="text-lg sm:text-xl font-bold text-red-400 mt-2">{timeoutWinner === 1 ? player1Name : player2Name} is the winner!</p>
               </div>
             </div>
           ) : (
@@ -403,13 +430,13 @@ const BlackHoleGame = () => {
                 <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-900/20 border border-red-600/30 rounded-lg text-center">
                   <h2 className="text-xl sm:text-2xl font-serif font-bold text-cream mb-2">Game Over</h2>
                   <div className="space-y-1 text-base sm:text-lg">
-                    <p>Player 1 Score: <span className="text-red-500">{p1}</span></p>
-                    <p>Player 2 Score: <span className="text-red-500">{p2}</span></p>
+                    <p>{player1Name} Score: <span className="text-red-500">{p1}</span></p>
+                    <p>{player2Name} Score: <span className="text-red-500">{p2}</span></p>
                     <p className="text-xs sm:text-sm text-cream/70 mt-1">
                       Winner determined by {getRingDescription(winningRing)}
                     </p>
                     <p className="text-lg sm:text-xl font-medium mt-2">
-                      {p1 < p2 ? 'Player 1 Wins!' : p1 > p2 ? 'Player 2 Wins!' : 'It\'s a Tie!'}
+                      {p1 < p2 ? `${player1Name} Wins!` : p1 > p2 ? `${player2Name} Wins!` : 'It\'s a Tie!'}
                     </p>
                     <p className="text-xs sm:text-sm text-cream/70 mt-1">
                       (Lower score wins - further from the black hole)
@@ -425,7 +452,7 @@ const BlackHoleGame = () => {
                         const ringTiles = getTilesAtDistance(blackHoleIndex, ring);
                         const { p1: ringP1, p2: ringP2 } = calculateScoreForRing(ringTiles);
                         return (
-                          <div 
+                          <div
                             key={ring}
                             className={`p-2 sm:p-3 rounded-lg border ${ring === winningRing ? 'bg-red-900/30 border-red-500' : 'bg-black/30 border-red-600/20'}`}
                           >

@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Blog", href: "/blog" },
   { name: "Games", href: "/games" },
   { name: "About Us", href: "/about" },
+  { name: "Contact", href: "/#contact", isContact: true },
   { name: "Team", href: "/team" },
 ]
 
@@ -47,6 +48,18 @@ export default function Navbar() {
         }, 200);
   }
 
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    router.push('/#contact');
+    // Wait for navigation to complete before scrolling
+    setTimeout(() => {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -78,6 +91,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={link.isContact ? handleContactClick : undefined}
                 className="text-cream hover:text-red-500 transition-colors relative group"
               >
                 {link.name}
@@ -128,8 +142,13 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
+              onClick={(e) => {
+                if (link.isContact) {
+                  handleContactClick(e);
+                }
+                setIsOpen(false);
+              }}
               className="text-cream hover:text-red-600 transition-colors py-2"
-              onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
