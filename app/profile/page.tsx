@@ -23,36 +23,12 @@ type User = {
 
 type FieldErrors = Partial<Record<string, string>>;
 
-const validatePhoneNumber = (phone: string): string | null => {
-    if (!phone) return null;
-    
-    // Check if contains only digits
-    if (!/^[0-9]+$/.test(phone)) {
-      return "Phone number must contain only digits (0-9)";
-    }
-    
-    // Check if exactly 10 digits
-    if (phone.length !== 10) {
-      return phone.length < 10 
-        ? `Phone number must be 10 digits`
-        : `Phone number must be exactly 10 digits`;
-    }
-    
-    // Check if starts with 0 (invalid in many countries)
-    if (phone.startsWith('0')) {
-      return "Phone number cannot start with 0";
-    }
-    
-    return null; // Valid
-  };
-
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [activeTab, setActiveTab] = useState<'profile' | 'kgp-verification' | 'password'>('profile');
   const [formData, setFormData] = useState({
     userName: "",
     fullName: "",
-    phoneNumber: "",
     collegeName: "",
     otherCollege: "",
     kgpMail: ""
@@ -79,34 +55,35 @@ export default function ProfilePage() {
   const [otpSent, setOtpSent] = useState(false);
   const [passwordOtpSent, setPasswordOtpSent] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+
+
   const router = useRouter();
 
+  // Check if user is IIT KGP student
+  const isIITKGPStudent = formData.collegeName === "Indian Institute of Technology, Kharagpur";
+
   const computeCompletion = (data: typeof formData, userData: User) => {
-    // Must have phone number for all users
-    if (!data.phoneNumber) return false;
-    
     // Must have college name
     if (!data.collegeName) return false;
-    
-    // If IIT KGP student, must also have KGP email
+
+    // If IIT KGP student, must also have verified KGP email
     if (data.collegeName === "Indian Institute of Technology, Kharagpur") {
       return !!(data.kgpMail && userData.kgpMailVerified);
     }
-    
-    // For non-KGP students, just phone number and college is enough
+
+    // For non-KGP students, just college is enough
     return true;
   };
 
   const getCompletionMessage = (data: typeof formData, userData: User) => {
-    if (!data.phoneNumber) return "Please add your phone number";
     if (!data.collegeName) return "Please select your college";
-    
+
     if (data.collegeName === "Indian Institute of Technology, Kharagpur") {
       if (!data.kgpMail) return "Please add your IIT KGP email";
       if (!userData.kgpMailVerified) return "Please verify your IIT KGP email";
     }
-    
+
     return "Profile completed";
   };
 
@@ -136,21 +113,25 @@ export default function ProfilePage() {
         }
 
         if (!res.ok) throw new Error("Failed to fetch profile");
-        
+
         const json = await res.json();
         const userData = json.data.user;
         setUser(userData);
 
+        // Handle college name mapping for "Other" colleges
+        let displayCollegeName = userData.collegeName || "";
+        let otherCollegeName = "";
+
+        if (userData.collegeName && userData.collegeName !== "Indian Institute of Technology, Kharagpur") {
+          displayCollegeName = "Other";
+          otherCollegeName = userData.collegeName;
+        }
+
         const init = {
           userName: userData.userName || "",
           fullName: userData.fullName || "",
-          phoneNumber: userData.phoneNumber || "",
-          collegeName: userData.collegeName || "",
-          otherCollege:
-            userData.collegeName && userData.collegeName !==
-            "Indian Institute of Technology, Kharagpur"
-              ? userData.collegeName
-              : "",
+          collegeName: displayCollegeName,
+          otherCollege: otherCollegeName,
           kgpMail: userData.kgpMail || ""
         };
 
@@ -187,91 +168,88 @@ export default function ProfilePage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(null);
-  setFieldErrors({});
-  setSuccess(null);
-  setLoading(true);
+    e.preventDefault();
+    setError(null);
+    setFieldErrors({});
+    setSuccess(null);
+    setLoading(true);
+    setPasswordSuccess(null);
 
-  try {
-    // Validate phone number before submission
-    const phoneError = validatePhoneNumber(formData.phoneNumber);
-    if (phoneError) {
-      setFieldErrors({ phoneNumber: phoneError });
+    try {
+      const payload: any = {
+        userName: formData.userName,
+        fullName: formData.fullName,
+        collegeName:
+          formData.collegeName === 'Other'
+            ? formData.otherCollege
+            : formData.collegeName
+      };
+
+      const token = localStorage.getItem("accessToken");
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (json.errors && Array.isArray(json.errors)) {
+          const errs: FieldErrors = {};
+          json.errors.forEach((err: any) => {
+            if (err.path) errs[err.path] = err.message;
+          });
+          setFieldErrors(errs);
+        } else {
+          setError(json.message || 'An unexpected error occurred. Please try again.');
+        }
+        return;
+      }
+
+      const updated = json.data.user;
+      setUser(updated);
+
+      // Handle college name mapping for "Other" colleges  
+      let displayCollegeName = updated.collegeName || "";
+      let otherCollegeName = "";
+
+      if (updated.collegeName && updated.collegeName !== "Indian Institute of Technology, Kharagpur") {
+        displayCollegeName = "Other";
+        otherCollegeName = updated.collegeName;
+      }
+
+      const nextForm = {
+        userName: updated.userName || "",
+        fullName: updated.fullName || "",
+        collegeName: displayCollegeName,
+        otherCollege: otherCollegeName,
+        kgpMail: updated.kgpMail || ""
+      };
+      setFormData(nextForm);
+      const complete = computeCompletion(nextForm, updated);
+      setIsComplete(complete);
+      Cookies.set('profileComplete', complete ? 'yes' : 'no');
+      setSuccess('Profile updated successfully.');
+
+      setTimeout(() => setSuccess(null), 3000);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const payload: any = {
-      userName: formData.userName,
-      fullName: formData.fullName,
-      phoneNumber: formData.phoneNumber,
-      collegeName:
-        formData.collegeName === 'Other'
-          ? formData.otherCollege
-          : formData.collegeName
-    };
-
-    const token = localStorage.getItem("accessToken");
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/profile`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      }
-    );
-
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      if (json.errors && Array.isArray(json.errors)) {
-        const errs: FieldErrors = {};
-        json.errors.forEach((err: any) => {
-          if (err.path) errs[err.path] = err.message;
-        });
-        setFieldErrors(errs);
-      } else {
-        setError(json.message || 'An unexpected error occurred. Please try again.');
-      }
-      return;
-    }
-
-    const updated = json.data.user;
-    setUser(updated);
-    const nextForm = {
-      userName: updated.userName || "",
-      fullName: updated.fullName || "",
-      phoneNumber: updated.phoneNumber || "",
-      collegeName: updated.collegeName || "",
-      otherCollege:
-        updated.collegeName !==
-        'Indian Institute of Technology, Kharagpur'
-          ? updated.collegeName
-          : "",
-      kgpMail: updated.kgpMail || ""
-    };
-    setFormData(nextForm);
-    const complete = computeCompletion(nextForm, updated);
-    setIsComplete(complete);
-    Cookies.set('profileComplete', complete ? 'yes' : 'no');
-    setSuccess('Profile updated successfully.');
-    
-    setTimeout(() => setSuccess(null), 3000);
-  } catch (err: any) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const sendPasswordOTP = async () => {
     setLoading(true);
     setError(null);
     setSuccess(null);
+    setPasswordSuccess(null);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/forgot-password`, {
@@ -289,7 +267,7 @@ export default function ProfilePage() {
 
       setSuccess("Password reset OTP sent to your email!");
       setPasswordOtpSent(true);
-      
+
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       setError(err.message);
@@ -333,7 +311,7 @@ export default function ProfilePage() {
         throw new Error(data.message || "Failed to change password");
       }
 
-      setSuccess("Password changed successfully!");
+      setPasswordSuccess("Password changed successfully!");
       setPasswordData({
         email: passwordData.email,
         otp: "",
@@ -341,8 +319,9 @@ export default function ProfilePage() {
         confirmPassword: ""
       });
       setPasswordOtpSent(false);
-      
-      setTimeout(() => setSuccess(null), 3000);
+
+      setTimeout(() => setPasswordSuccess(null), 5000);
+
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -359,6 +338,7 @@ export default function ProfilePage() {
     setLoading(true);
     setError(null);
     setSuccess(null);
+    setPasswordSuccess(null);
 
     try {
       const token = localStorage.getItem("accessToken");
@@ -378,7 +358,7 @@ export default function ProfilePage() {
 
       setSuccess("OTP sent to your KGP email!");
       setOtpSent(true);
-      
+
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       setError(err.message);
@@ -417,14 +397,14 @@ export default function ProfilePage() {
       setSuccess("KGP email verified successfully!");
       setOtpSent(false);
       setKgpVerificationData({ ...kgpVerificationData, otp: "" });
-      
+
       // Update completion status
       if (user) {
         const complete = computeCompletion(formData, data.data.user);
         setIsComplete(complete);
         Cookies.set('profileComplete', complete ? 'yes' : 'no');
       }
-      
+
       setTimeout(() => setSuccess(null), 3000);
     } catch (err: any) {
       setError(err.message);
@@ -481,7 +461,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-theme-background pt-16">
       <Navbar />
-      
+
       {/* Loading Overlay */}
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
@@ -491,7 +471,7 @@ export default function ProfilePage() {
           </div>
         </div>
       )}
-      
+
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Profile Completion Alert */}
         {!isComplete && (
@@ -530,15 +510,14 @@ export default function ProfilePage() {
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">{user.fullName}</h1>
             <p className="text-gray-300 text-lg mb-4">@{user.userName}</p>
-            
+
             {/* Status Badges */}
             <div className="flex items-center justify-center space-x-4 flex-wrap gap-2">
               <span
-                className={`px-4 py-2 rounded-full text-sm font-medium ${
-                  isComplete
+                className={`px-4 py-2 rounded-full text-sm font-medium ${isComplete
                     ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                     : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                }`}
+                  }`}
               >
                 {isComplete ? (
                   <>
@@ -572,7 +551,7 @@ export default function ProfilePage() {
                   Email Unverified
                 </span>
               )}
-              
+
               {user.kgpMailVerified && (
                 <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-blue-500/20 text-blue-400 border border-blue-500/30">
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -593,36 +572,38 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Tab Navigation */}
+          {/* Tab Navigation - Conditionally render KGP verification tab */}
           <div className="border-b border-gray-700">
             <div className="flex">
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`px-6 py-4 font-medium transition-colors ${
-                  activeTab === 'profile'
+                className={`px-6 py-4 font-medium transition-colors ${activeTab === 'profile'
                     ? 'text-red-400 border-b-2 border-red-400'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 Profile Information
               </button>
-              <button
-                onClick={() => setActiveTab('kgp-verification')}
-                className={`px-6 py-4 font-medium transition-colors ${
-                  activeTab === 'kgp-verification'
-                    ? 'text-red-400 border-b-2 border-red-400'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                IIT KGP Verification
-              </button>
+
+              {/* Only show KGP verification tab if user selected IIT KGP */}
+              {isIITKGPStudent && (
+                <button
+                  onClick={() => setActiveTab('kgp-verification')}
+                  className={`px-6 py-4 font-medium transition-colors ${activeTab === 'kgp-verification'
+                      ? 'text-red-400 border-b-2 border-red-400'
+                      : 'text-gray-400 hover:text-white'
+                    }`}
+                >
+                  IIT KGP Verification
+                </button>
+              )}
+
               <button
                 onClick={() => setActiveTab('password')}
-                className={`px-6 py-4 font-medium transition-colors ${
-                  activeTab === 'password'
+                className={`px-6 py-4 font-medium transition-colors ${activeTab === 'password'
                     ? 'text-red-400 border-b-2 border-red-400'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 Change Password
               </button>
@@ -681,24 +662,6 @@ export default function ProfilePage() {
 
                     <div>
                       <label className="block text-gray-300 text-sm font-medium mb-2">
-                        Phone Number <span className="text-red-400">*</span>
-                      </label>
-                      <input
-                        name="phoneNumber"
-                        type="text"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        placeholder="10-digit phone number"
-                        className="w-full p-4 rounded-lg bg-black/80 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300"
-                        disabled={loading}
-                      />
-                      {fieldErrors.phoneNumber && (
-                        <p className="text-red-400 text-sm mt-1">{fieldErrors.phoneNumber}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-gray-300 text-sm font-medium mb-2">
                         College <span className="text-red-400">*</span>
                       </label>
                       <select
@@ -750,7 +713,7 @@ export default function ProfilePage() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full bg-red-500 hover:bg-red-600 text-white p-4 rounded-lg font-medium transition-colors disabled:opacity-50"
+                      className="w-full bg-red-500 hover:bg-red-600 text-white p-4 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? "Saving Changes..." : "Save Changes"}
                     </button>
@@ -779,11 +742,11 @@ export default function ProfilePage() {
               </div>
             )}
 
-            {/* KGP Verification Tab */}
-            {activeTab === 'kgp-verification' && (
+            {/* KGP Verification Tab - Only show if IIT KGP is selected */}
+            {activeTab === 'kgp-verification' && isIITKGPStudent && (
               <div className="max-w-md mx-auto">
                 <h3 className="text-xl font-bold text-white mb-6 text-center">IIT KGP Email Verification</h3>
-                
+
                 {user.kgpMailVerified ? (
                   <div className="text-center">
                     <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -858,7 +821,20 @@ export default function ProfilePage() {
                 <p className="text-gray-400 text-center mb-6">
                   We'll send an OTP to your email address to verify your identity before changing your password.
                 </p>
-                
+
+                {/* Password Success Message */}
+                {passwordSuccess && (
+                  <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <p className="text-green-400">{passwordSuccess}</p>
+                    </div>
+                  </div>
+                )}
+
+
                 {!passwordOtpSent ? (
                   <div className="space-y-6">
                     <div>

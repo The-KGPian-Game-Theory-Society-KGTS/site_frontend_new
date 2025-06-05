@@ -68,7 +68,7 @@ export default function LoginPage() {
       localStorage.setItem("accessToken", data.data.accessToken);
       localStorage.setItem("refreshToken", data.data.refreshToken);
       setTimeout(() => {
-          window.location.href = "/profile";
+          window.location.href = "/";
         }, 500);
     } catch (err: unknown) {
       setErrors({ general: "Network error. Please check your connection and try again." });
