@@ -193,7 +193,15 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <div className="text-center pt-4 border-t border-gray-600">
+          <div className="text-center space-y-3 pt-4 border-t border-gray-600">
+            <div>
+              <a 
+                href="/auth/forgot-password" 
+                className="text-red-400 hover:text-red-300 font-medium transition-colors hover:underline"
+              >
+                Forgot your password?
+              </a>
+            </div>
             <p className="text-gray-400">
               Don't have an account?{" "}
               <a href="/auth/signup" className="text-red-400 hover:text-red-300 font-medium transition-colors hover:underline">

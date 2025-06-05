@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, User, LogOut, Mail } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 const navLinks = [
@@ -12,7 +12,6 @@ const navLinks = [
   { name: "Blog", href: "/blog" },
   { name: "Games", href: "/games" },
   { name: "About Us", href: "/about" },
-  { name: "Contact Us", href: "/#contact", isContact: true },
   { name: "Team", href: "/team" },
 ]
 
@@ -20,7 +19,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false)
   const router = useRouter()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,47 +41,56 @@ export default function Navbar() {
     setIsLoggedIn(!!token)
   }, [])
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsProfileDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken")
     localStorage.removeItem("refreshToken")
+    setIsProfileDropdownOpen(false)
     setTimeout(() => {
-          window.location.href = "/";
-        }, 200);
+      window.location.href = "/"
+    }, 200)
   }
 
   const handleContactClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const contactSection = document.getElementById('contact');
+    e.preventDefault()
+    setIsOpen(false) // Close mobile menu if open
     
-    if (contactSection) {
-      // If we're already on the home page, just scroll
-      if (window.location.pathname === '/') {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // If we're on another page, navigate to home and then scroll
-        router.push('/');
-        // Use a MutationObserver to detect when the contact section becomes available
-        const observer = new MutationObserver((mutations, obs) => {
-          const contactSection = document.getElementById('contact');
-          if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-            obs.disconnect(); // Stop observing once we've scrolled
-          }
-        });
-
-        // Start observing the document body for changes
-        observer.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
-
-        // Cleanup observer after 5 seconds if it hasn't found the section
-        setTimeout(() => {
-          observer.disconnect();
-        }, 5000);
-      }
+    if (window.location.pathname === '/') {
+      // If we're already on the home page, scroll to bottom
+      window.scrollTo({ 
+        top: document.documentElement.scrollHeight, 
+        behavior: 'smooth' 
+      })
+    } else {
+      // If we're on another page, navigate to home and then scroll to bottom
+      router.push('/')
+      
+      // Use a timeout to wait for navigation, then scroll to bottom
+      setTimeout(() => {
+        window.scrollTo({ 
+          top: document.documentElement.scrollHeight, 
+          behavior: 'smooth' 
+        })
+      }, 500) // Give some time for the page to load
     }
-  };
+  }
+
+  const handleProfileClick = () => {
+    router.push("/profile")
+    setIsProfileDropdownOpen(false)
+    setIsOpen(false) // Close mobile menu if open
+  }
 
   return (
     <nav
@@ -113,36 +123,58 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={link.isContact ? handleContactClick : undefined}
                 className="text-cream hover:text-red-500 transition-colors relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
+            
+            {/* Contact Us Button */}
+            <button
+              onClick={handleContactClick}
+              className="text-cream hover:text-red-500 transition-colors relative group flex items-center space-x-1"
+            >
+              {/* <Mail size={16} /> */}
+              <span>Contact Us</span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+            </button>
+
             {isLoggedIn ? (
-              <>
-                <Link href="/profile" className="text-cream hover:text-red-500 transition-colors relative group">
-                  Profile
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
+              /* Profile Dropdown */
+              <div className="relative" ref={dropdownRef}>
                 <button
-                  onClick={handleLogout}
-                  className="bg-red-500 px-4 py-2 rounded"
+                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                  className="flex items-center justify-center w-10 h-10 bg-red-500 hover:bg-red-600 rounded-full transition-colors duration-300 shadow-lg hover:shadow-red-500/25"
                 >
-                  Logout
+                  <User size={20} className="text-white" />
                 </button>
-              </>
+                
+                {isProfileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-black/95 backdrop-blur-md border border-red-600/30 rounded-lg shadow-lg overflow-hidden">
+                    <div className="py-1">
+                      <button
+                        onClick={handleProfileClick}
+                        className="flex items-center w-full px-4 py-3 text-cream hover:bg-red-500/20 transition-colors duration-200"
+                      >
+                        <User size={16} className="mr-3" />
+                        Profile
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center w-full px-4 py-3 text-cream hover:bg-red-500/20 transition-colors duration-200"
+                      >
+                        <LogOut size={16} className="mr-3" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
-              <>
-                {/* <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors relative group">
-                  Login
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
-                </Link> */}
-                <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
-                  Sign In
-                </Link>
-              </>
+              <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
+                Sign In
+              </Link>
             )} 
           </div>
 
@@ -164,30 +196,40 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              onClick={(e) => {
-                if (link.isContact) {
-                  handleContactClick(e);
-                }
-                setIsOpen(false);
-              }}
               className="text-cream hover:text-red-600 transition-colors py-2"
+              onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
           ))}
+          
+          {/* Contact Us Mobile */}
+          <button
+            onClick={handleContactClick}
+            className="text-cream hover:text-red-600 transition-colors py-2 flex items-center space-x-2 text-left"
+          >
+            {/* <Mail size={16} /> */}
+            <span>Contact Us</span>
+          </button>
+
           {isLoggedIn ? (
             <>
-              <Link href="/profile" className="text-cream hover:text-red-600 transition-colors py-2" onClick={() => setIsOpen(false)}>
-                Profile
-              </Link>
+              <button
+                onClick={handleProfileClick}
+                className="text-cream hover:text-red-600 transition-colors py-2 flex items-center space-x-2 text-left"
+              >
+                <User size={16} />
+                <span>Profile</span>
+              </button>
               <button
                 onClick={() => {
                   handleLogout()
                   setIsOpen(false)
                 }}
-                className="bg-red-500 active:scale-95 px-4 py-2 rounded"
+                className="bg-red-500 active:scale-95 px-4 py-2 rounded flex items-center space-x-2"
               >
-                Logout
+                <LogOut size={16} />
+                <span>Logout</span>
               </button>
             </>
           ) : (
