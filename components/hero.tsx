@@ -59,7 +59,7 @@ export default function Hero() {
       // Set theory symbols
       "ℝ", "ℕ", "ℤ", "ℚ", "ℂ",
       // Calculus symbols
-      "∫", "∂", "∞", "∇", "∑", "∏",
+      "∫", "∂", "∞", "∇", "∑", "∏","d/dx", "∂/∂x",
       // Currency symbols
       "₹", "$", "€", "£", "¥",
     ]
@@ -164,8 +164,8 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="mb-6"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-cream mb-4 tracking-tight text-red">
-            The <span className="text-[#8B0000]">KGPian</span> Game Theory Society
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-cream mb-4 tracking-tight text-glow-red">
+            The <span className="text-red-600">KGPian</span> Game Theory Society
           </h1>
           <p className="text-xl md:text-2xl text-cream/90 max-w-3xl mx-auto">
             Where strategy meets probability, and every decision counts

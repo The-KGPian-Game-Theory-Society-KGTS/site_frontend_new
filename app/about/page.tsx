@@ -15,168 +15,74 @@ export default function AboutPage() {
           </div>
 
           <div className="max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl font-serif font-bold text-cream mb-6 text-center">Our History</h2>
             <div className="bg-black/70 border border-red-600/30 rounded-lg p-8">
               <p className="text-cream/80 leading-relaxed mb-4">
-                The KGPian Game Theory Society was founded on 19th August 2010 by Manoj Gadia at IIT Kharagpur, with a vision to promote awareness and application of game theory among students across disciplines.
+                KGTS is a community of strategy enthusiasts, uniting students who are eager to understand how decisions are made, influenced, and optimized. Rooted in the principles of game theory, we explore both competitive and cooperative scenarios—ranging from economic models and voting systems to real-world negotiations and everyday games. Whether analyzing complex systems or engaging in strategic games, we approach challenges with logic, creativity, and a keen curiosity about how rational choices shape outcomes.
               </p>
               <p className="text-cream/80 leading-relaxed mb-4">
-                What started as a student-led initiative with informal sessions and strategic discussions evolved into a dynamic society organizing high-impact events such as Nashify, Treasure Hunt, and the flagship competition Stratathon.
+                Our members engage in strategy development, case studies, research discussions, riddle-solving sessions, and game nights. At KGTS, we foster an environment where rigorous thinking meets playful exploration, allowing strategic minds to thrive and grow together.
+
               </p>
               <p className="text-cream/80 leading-relaxed">
-                Over the years, KGTS has grown into a vibrant community of over 50 active members, hosting discussions, case studies, and publishing The Strategist newsletter—all centered around cultivating strategic thinking, decision-making, and game theory-based problem solving.
+                Our flagship event, Stratathon, brings together students from across IIT Kharagpur to face exciting and challenging strategic problems, sharpening their analytical skills and encouraging innovative thinking. Alongside, fun-filled events like the Treasure Hunt offer a thrilling way to develop teamwork, creativity, and quick decision-making. These events provide KGPians with unique opportunities to apply game theory concepts in real-world scenarios while enjoying friendly competition and collaboration.
               </p>
             </div>
           </div>
 
-          <div className="bg-black/70 border border-red-600/30 rounded-lg p-8 mb-16">
-            <h2 className="text-3xl font-serif font-bold text-cream mb-6 text-center">Our Mission</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center text-red-500 mx-auto mb-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 20v-6M6 20V10M18 20V4"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-medium text-cream mb-2">Education</h3>
-                <p className="text-cream/70">
-                  To promote understanding of game theory principles and their applications through workshops, seminars,
-                  and accessible resources.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center text-red-500 mx-auto mb-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="m9 12 2 2 4-4"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-medium text-cream mb-2">Research</h3>
-                <p className="text-cream/70">
-                  To encourage original research and exploration of game theory applications in various fields through
-                  collaborative projects.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center text-red-500 mx-auto mb-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                </div>
-                <h3 className="text-xl font-medium text-cream mb-2">Community</h3>
-                <p className="text-cream/70">
-                  To build a vibrant community of game theory enthusiasts who can learn from each other and grow
-                  together intellectually.
-                </p>
-              </div>
-            </div>
-          </div>
+          
 
           <div className="mb-16">
             <h2 className="text-3xl font-serif font-bold text-cream mb-6 text-center">What is Game Theory?</h2>
             <div className="bg-black/70 border border-red-600/30 rounded-lg p-8">
               <p className="text-cream/80 leading-relaxed mb-6">
-                Game theory is the study of mathematical models of strategic interactions among rational agents. It has
-                applications in all fields of social science, as well as in logic, systems science, and computer
-                science. Originally, it addressed two-person zero-sum games, in which each participant's gains or losses
-                are exactly balanced by those of other participants.
+                Game theory is a mathematical framework for analyzing situations where multiple decision-makers (called players) interact, and each one’s outcome depends on the choices of others.
+                It studies how strategies are formed in both competitive and cooperative settings—such as market competition, business negotiations, auctions, military conflicts, political campaigns, or even dating.
+                The goal is to understand and predict the behavior of rational agents, often revealing surprising or counterintuitive outcomes.
+                Game theory has widespread applications across economics, computer science, politics, policy making, healthcare, law and more.
+
               </p>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-medium text-cream mb-3">Key Concepts</h3>
-                  <ul className="space-y-2 text-cream/80">
-                    <li className="flex items-start">
-                      <span className="text-red-500 mr-2">•</span>
-                      <span>
-                        <strong className="text-cream">Nash Equilibrium:</strong> A state where no player can benefit by
-                        changing their strategy while the other players keep theirs unchanged.
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-red-500 mr-2">•</span>
-                      <span>
-                        <strong className="text-cream">Dominant Strategy:</strong> A strategy that is optimal regardless
-                        of what the opponent does.
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-red-500 mr-2">•</span>
-                      <span>
-                        <strong className="text-cream">Pareto Optimality:</strong> A state where no individual can be
-                        made better off without making at least one individual worse off.
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-red-500 mr-2">•</span>
-                      <span>
-                        <strong className="text-cream">Zero-Sum Games:</strong> Games where one player's gain is exactly
-                        balanced by the other player's loss.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="gap-y-4">
                 <div>
                   <h3 className="text-xl font-medium text-cream mb-3">Applications</h3>
                   <ul className="space-y-2 text-cream/80">
                     <li className="flex items-start">
                       <span className="text-red-500 mr-2">•</span>
                       <span>
-                        <strong className="text-cream">Economics:</strong> Market behavior, auctions, pricing
-                        strategies, and industrial organization.
+                        <strong className="text-cream">Economics:</strong> Game theory helps analyze how individuals, firms, and markets make decisions when their outcomes depend on others. It’s used to study competition, pricing strategies, auctions, bargaining, and market design to predict behaviors and improve efficiency.
+
                       </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-red-500 mr-2">•</span>
                       <span>
-                        <strong className="text-cream">Political Science:</strong> Voting systems, international
-                        relations, and conflict resolution.
+                        <strong className="text-cream">Computer Science:</strong> In computer science, game theory models interactions between algorithms or agents, such as in network security, distributed computing, and artificial intelligence. It helps design protocols where multiple users or systems act strategically, like in online auctions or resource allocation.
+
                       </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-red-500 mr-2">•</span>
                       <span>
-                        <strong className="text-cream">Biology:</strong> Evolution, animal behavior, and ecological
-                        systems.
+                        <strong className="text-cream">Politics:</strong> Game theory models strategic interactions in voting, coalition building, diplomacy, and conflict. It helps predict how political actors behave in elections, negotiations, or international relations, offering insights into cooperation and competition dynamics.
+
                       </span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-red-500 mr-2">•</span>
                       <span>
-                        <strong className="text-cream">Computer Science:</strong> Artificial intelligence, machine
-                        learning, and network security.
+                        <strong className="text-cream">Policy Making:</strong> Policymakers use game theory to understand the strategic behavior of stakeholders, such as governments, corporations, and citizens. It aids in designing regulations, tax policies, and international agreements that account for incentives and potential responses.
+
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-2">•</span>
+                      <span>
+                        <strong className="text-cream">Medicine and Healthcare:</strong> Game theory is applied to model interactions between patients, healthcare providers, and insurers. It helps analyze vaccination decisions, epidemic control, treatment strategies, and resource allocation to improve health outcomes and policy design.
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-red-500 mr-2">•</span>
+                      <span>
+                        <strong className="text-cream">Law:</strong> In law, game theory studies negotiation, litigation strategies, plea bargaining, and contract design. It helps predict how parties will behave during disputes or agreements, assisting in creating fair and efficient legal processes.
                       </span>
                     </li>
                   </ul>
