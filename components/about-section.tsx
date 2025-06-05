@@ -17,7 +17,7 @@ export default function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-cream mb-4">
-            About <span className="text-[#8B0000] filter drop-shadow-[0_0_8px_rgba(139,0,0,0.6)]">Us</span>
+            About <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Us</span>
           </h2>
           <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
         </motion.div>

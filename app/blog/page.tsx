@@ -2,22 +2,11 @@
 
 import BlogCard from "@/components/blog-card"
 import { useEffect, useState } from "react";
+import { BlogPost } from "@/data/blog-posts"
 import Footer from "@/components/footer"
 
-type Blog = {
-  id: number; // Change `id` to `number` to match the expected type
-  title: string;
-  author: string;
-  image: string;
-  date: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  externalLink: string; // Add the missing property
-};
-
 export default function BlogPage() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,7 +17,12 @@ export default function BlogPage() {
           throw new Error("Failed to fetch blogs");
         }
         const data = await response.json();
-        setBlogs(data.data.blogs);
+        // Ensure each blog has a unique id
+        const blogsWithIds = data.data.blogs.map((blog: any, index: number) => ({
+          ...blog,
+          id: blog.id || index + 1 // Use existing id or generate one
+        }));
+        setBlogs(blogsWithIds);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -44,7 +38,7 @@ export default function BlogPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-cream mb-4">
-              Our <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Blog</span>
+              Our <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">Articles</span>
             </h1>
             <div className="w-20 h-1 bg-red-600 mx-auto"></div>
             <p className="text-cream/80 mt-6 max-w-3xl mx-auto">
@@ -63,8 +57,8 @@ export default function BlogPage() {
           )}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((post) => (
-              <BlogCard key={post.id} post={post} />
+            {blogs.map((post, index) => (
+              <BlogCard key={post.id || `blog-${index}`} post={post} index={index} />
             ))}
           </div>
         </div>
