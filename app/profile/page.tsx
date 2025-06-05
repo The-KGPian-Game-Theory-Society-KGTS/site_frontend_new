@@ -515,8 +515,8 @@ export default function ProfilePage() {
             <div className="flex items-center justify-center space-x-4 flex-wrap gap-2">
               <span
                 className={`px-4 py-2 rounded-full text-sm font-medium ${isComplete
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                  ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                  : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
                   }`}
               >
                 {isComplete ? (
@@ -578,8 +578,8 @@ export default function ProfilePage() {
               <button
                 onClick={() => setActiveTab('profile')}
                 className={`px-6 py-4 font-medium transition-colors ${activeTab === 'profile'
-                    ? 'text-red-400 border-b-2 border-red-400'
-                    : 'text-gray-400 hover:text-white'
+                  ? 'text-red-400 border-b-2 border-red-400'
+                  : 'text-gray-400 hover:text-white'
                   }`}
               >
                 Profile Information
@@ -590,8 +590,8 @@ export default function ProfilePage() {
                 <button
                   onClick={() => setActiveTab('kgp-verification')}
                   className={`px-6 py-4 font-medium transition-colors ${activeTab === 'kgp-verification'
-                      ? 'text-red-400 border-b-2 border-red-400'
-                      : 'text-gray-400 hover:text-white'
+                    ? 'text-red-400 border-b-2 border-red-400'
+                    : 'text-gray-400 hover:text-white'
                     }`}
                 >
                   IIT KGP Verification
@@ -601,8 +601,8 @@ export default function ProfilePage() {
               <button
                 onClick={() => setActiveTab('password')}
                 className={`px-6 py-4 font-medium transition-colors ${activeTab === 'password'
-                    ? 'text-red-400 border-b-2 border-red-400'
-                    : 'text-gray-400 hover:text-white'
+                  ? 'text-red-400 border-b-2 border-red-400'
+                  : 'text-gray-400 hover:text-white'
                   }`}
               >
                 Change Password
@@ -807,10 +807,20 @@ export default function ProfilePage() {
                         >
                           {loading ? "Verifying..." : "Verify IIT KGP Email"}
                         </button>
+                        <button
+                          type="button"
+                          onClick={sendKgpOTP}
+                          disabled={loading}
+                          className="w-full bg-yellow-500 hover:bg-yellow-600 text-black p-4 rounded-lg font-medium transition-colors disabled:opacity-50"
+                        >
+                          {loading ? "Resending..." : "Resend OTP"}
+                        </button>
                       </form>
                     )}
+
                   </div>
                 )}
+
               </div>
             )}
 
