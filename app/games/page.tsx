@@ -1,9 +1,9 @@
 "use client";
 
-import { Trophy, Users, Clock } from "lucide-react"
+import { Trophy, Users, Clock, Lock } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Game = {
   id: string;
@@ -30,6 +30,15 @@ const dummyGames: Game[] = [
 
 export default function GamesPage() {
   const [games] = useState<Game[]>(dummyGames);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check authentication status
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token);
+    setIsLoading(false);
+  }, []);
 
   const Games = games;
 
@@ -46,6 +55,20 @@ export default function GamesPage() {
             <p className="text-cream/80 mt-6 max-w-4xl mx-auto">
               Explore our collection of game theory games that challenge your strategic thinking and decision-making skills.
             </p>
+            {!isLoggedIn && !isLoading && (
+              <div className="mt-6 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg max-w-2xl mx-auto">
+                <div className="flex items-center justify-center space-x-2">
+                  <Lock size={20} className="text-yellow-400" />
+                  <p className="text-yellow-400 font-medium">
+                    Please{" "}
+                    <Link href="/auth/login" className="text-red-400 hover:text-red-300 underline transition-colors">
+                      sign in
+                    </Link>{" "}
+                    to play our games
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {Games.length === 0 ? (
@@ -62,6 +85,11 @@ export default function GamesPage() {
                       style={{ backgroundImage: `url(${game.image})` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+                    {!isLoggedIn && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Lock size={32} className="text-red-400" />
+                      </div>
+                    )}
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
@@ -94,12 +122,32 @@ export default function GamesPage() {
                       </div>
                     </div>
 
-                    <Link
-                      href={game.link}
-                      className="mt-6 inline-flex items-center justify-center px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
-                    >
-                      Play Now
-                    </Link>
+                    {isLoading ? (
+                      <div className="mt-6 inline-flex items-center justify-center px-4 py-2 bg-gray-600/50 text-cream/50 rounded cursor-not-allowed">
+                        Loading...
+                      </div>
+                    ) : isLoggedIn ? (
+                      <Link
+                        href={game.link}
+                        className="mt-6 inline-flex items-center justify-center px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
+                      >
+                        <Trophy size={16} className="mr-2" />
+                        Play Now
+                      </Link>
+                    ) : (
+                      <div className="mt-6 space-y-2">
+                        <div className="inline-flex items-center justify-center px-4 py-2 bg-gray-600/30 text-cream/50 rounded cursor-not-allowed w-full border border-gray-500/30">
+                          <Lock size={16} className="mr-2" />
+                          Login Required
+                        </div>
+                        <Link
+                          href="/auth/login"
+                          className="inline-flex items-center justify-center px-4 py-2 bg-blue-600/50 text-cream rounded hover:bg-blue-600 transition-colors shadow-[0_0_10px_rgba(0,100,255,0.2)] hover:shadow-[0_0_15px_rgba(0,100,255,0.4)] w-full"
+                        >
+                          Sign In to Play
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
