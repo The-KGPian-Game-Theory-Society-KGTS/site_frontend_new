@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, User, LogOut, Mail } from "lucide-react"
+import { Menu, X, User, LogOut, Mail, ChevronDown } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 const navLinks = [
@@ -20,6 +20,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false)
+  const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false) // New state for mobile profile dropdown
   const router = useRouter()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -57,6 +58,8 @@ export default function Navbar() {
     localStorage.removeItem("accessToken")
     localStorage.removeItem("refreshToken")
     setIsProfileDropdownOpen(false)
+    setIsMobileProfileOpen(false) // Close mobile dropdown too
+    setIsOpen(false) // Close mobile menu
     setTimeout(() => {
       window.location.href = "/"
     }, 200)
@@ -69,19 +72,6 @@ export default function Navbar() {
     // If we're on another page, navigate to home page with contact section
     if (window.location.pathname !== '/') {
       router.push('/#contact')
-      // Wait for navigation to complete before scrolling
-      // setTimeout(() => {
-      //   const contactSection = document.getElementById('contact')
-      //   console.log("started scrolling")
-      //   if (contactSection) {
-      //     const navbarHeight = 80 // Approximate navbar height
-      //     const offset = contactSection.offsetTop - navbarHeight
-      //     window.scrollTo({
-      //       top: offset,
-      //       behavior: 'smooth'
-      //     })
-      //   }
-      // }, 2000)
     } else {
       // If we're already on home page, just scroll to contact section
       const contactSection = document.getElementById('contact')
@@ -99,7 +89,13 @@ export default function Navbar() {
   const handleProfileClick = () => {
     router.push("/profile")
     setIsProfileDropdownOpen(false)
+    setIsMobileProfileOpen(false) // Close mobile dropdown
     setIsOpen(false) // Close mobile menu if open
+  }
+
+  // Toggle mobile profile dropdown
+  const toggleMobileProfile = () => {
+    setIsMobileProfileOpen(!isMobileProfileOpen)
   }
 
   return (
@@ -151,7 +147,7 @@ export default function Navbar() {
             </button>
 
             {isLoggedIn ? (
-              /* Profile Dropdown */
+              /* Desktop Profile Dropdown */
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
@@ -222,34 +218,54 @@ export default function Navbar() {
           </button>
 
           {isLoggedIn ? (
-            <>
+            /* Mobile Profile Dropdown */
+            <div className="border-t border-red-600/30 pt-4">
               <button
-                onClick={handleProfileClick}
-                className="text-cream hover:text-red-500 transition-colors py-2 flex items-center space-x-2 text-left"
+                onClick={toggleMobileProfile}
+                className="flex items-center justify-between w-full text-cream hover:text-red-500 transition-colors py-2"
               >
-                <User size={16} />
-                <span>Profile</span>
+                <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-center w-8 h-8 bg-red-500 rounded-full">
+                    <User size={16} className="text-white" />
+                  </div>
+                  <span>Account</span>
+                </div>
+                <ChevronDown 
+                  size={16} 
+                  className={`transition-transform duration-200 ${isMobileProfileOpen ? 'rotate-180' : ''}`}
+                />
               </button>
-              <button
-                onClick={() => {
-                  handleLogout()
-                  setIsOpen(false)
-                }}
-                className="bg-red-500 text-cream hover:bg-red-600 transition-all duration-300 active:scale-95 px-4 py-2 rounded flex items-center space-x-2 shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
-              >
-                <LogOut size={16} />
-                <span>Logout</span>
-              </button>
-            </>
+              
+              {/* Mobile Profile Submenu */}
+              <div className={`ml-4 mt-2 space-y-2 transition-all duration-300 ${
+                isMobileProfileOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+              }`}>
+                <button
+                  onClick={handleProfileClick}
+                  className="flex items-center w-full text-cream hover:text-red-500 transition-colors py-2 pl-6"
+                >
+                  <User size={16} className="mr-3" />
+                  <span>Profile</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center w-full text-cream hover:text-red-500 transition-colors py-2 pl-6"
+                >
+                  <LogOut size={16} className="mr-3" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
           ) : (
-            <>
-              <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors py-2" onClick={() => setIsOpen(false)}>
+            /* Mobile Auth Links */
+            <div className="border-t border-red-600/30 pt-4 space-y-2">
+              <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors py-2 block" onClick={() => setIsOpen(false)}>
                 Login
               </Link>
-              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]" onClick={() => setIsOpen(false)}>
+              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)] inline-block" onClick={() => setIsOpen(false)}>
                 Sign Up
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>
