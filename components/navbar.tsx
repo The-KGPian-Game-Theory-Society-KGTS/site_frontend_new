@@ -144,8 +144,8 @@ export default function Navbar() {
             <button
               onClick={handleContactClick}
               className="text-cream hover:text-red-500 transition-colors relative group flex items-center space-x-1"
+              suppressHydrationWarning
             >
-              {/* <Mail size={16} /> */}
               <span>Contact Us</span>
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
             </button>
@@ -182,7 +182,7 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded">
+              <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]">
                 Sign In
               </Link>
             )} 
@@ -206,7 +206,7 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-cream hover:text-red-600 transition-colors py-2"
+              className="text-cream hover:text-red-500 transition-colors py-2"
               onClick={() => setIsOpen(false)}
             >
               {link.name}
@@ -216,9 +216,8 @@ export default function Navbar() {
           {/* Contact Us Mobile */}
           <button
             onClick={handleContactClick}
-            className="text-cream hover:text-red-600 transition-colors py-2 flex items-center space-x-2 text-left"
+            className="text-cream hover:text-red-500 transition-colors py-2 flex items-center space-x-2 text-left"
           >
-            {/* <Mail size={16} /> */}
             <span>Contact Us</span>
           </button>
 
@@ -226,7 +225,7 @@ export default function Navbar() {
             <>
               <button
                 onClick={handleProfileClick}
-                className="text-cream hover:text-red-600 transition-colors py-2 flex items-center space-x-2 text-left"
+                className="text-cream hover:text-red-500 transition-colors py-2 flex items-center space-x-2 text-left"
               >
                 <User size={16} />
                 <span>Profile</span>
@@ -236,7 +235,7 @@ export default function Navbar() {
                   handleLogout()
                   setIsOpen(false)
                 }}
-                className="bg-red-500 active:scale-95 px-4 py-2 rounded flex items-center space-x-2"
+                className="bg-red-500 text-cream hover:bg-red-600 transition-all duration-300 active:scale-95 px-4 py-2 rounded flex items-center space-x-2 shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]"
               >
                 <LogOut size={16} />
                 <span>Logout</span>
@@ -244,10 +243,10 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link href="/auth/login" className="text-cream hover:text-red-600 transition-colors py-2" onClick={() => setIsOpen(false)}>
+              <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors py-2" onClick={() => setIsOpen(false)}>
                 Login
               </Link>
-              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded" onClick={() => setIsOpen(false)}>
+              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]" onClick={() => setIsOpen(false)}>
                 Sign Up
               </Link>
             </>

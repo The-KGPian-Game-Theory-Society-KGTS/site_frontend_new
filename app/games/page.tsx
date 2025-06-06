@@ -142,7 +142,7 @@ export default function GamesPage() {
                         </div>
                         <Link
                           href="/auth/login"
-                          className="inline-flex items-center justify-center px-4 py-2 bg-blue-600/50 text-cream rounded hover:bg-blue-600 transition-colors shadow-[0_0_10px_rgba(0,100,255,0.2)] hover:shadow-[0_0_15px_rgba(0,100,255,0.4)] w-full"
+                          className="inline-flex items-center justify-center px-4 py-2 bg-red-500/50 text-cream rounded transition-colors hover:bg-red-600/50 shadow-[0_0_10px_rgba(0,100,255,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)] w-full"
                         >
                           Sign In to Play
                         </Link>
