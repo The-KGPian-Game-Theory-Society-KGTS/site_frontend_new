@@ -1,13 +1,14 @@
+// components/blog-section.tsx
 "use client"
 
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useCachedFetch } from "@/hooks/useCachedFetch"
 import BlogCard from "./blog-card"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 type Blog = {
-  id: number; // Updated to match BlogCard expectations
+  id: number;
   title: string;
   excerpt: string;
   image: string;
@@ -18,30 +19,16 @@ type Blog = {
 };
 
 export default function BlogSection() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { data, error, isLoading } = useCachedFetch<{data: {blogs: Blog[]}}>(
+    'homepage-blogs',
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?page=1&limit=3`
+  )
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?page=1&limit=3`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch blogs");
-        }
-        const data = await response.json();
-        setBlogs(data.data.blogs);
-      } catch (err) {
-        setError((err as Error).message);
-      }
-    };
+  const blogs = data?.data?.blogs || []
 
-    fetchBlogs();
-  }, []);
-
-  if (error || blogs.length === 0) {
+  if (error || (!isLoading && blogs.length === 0)) {
     return (
       <section id="blogs" className="py-20 relative">
-    
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
@@ -58,7 +45,6 @@ export default function BlogSection() {
               Explore our collection of articles on game theory concepts, applications, and the latest research.
             </p>
           </motion.div>
-
           <div className="text-center text-cream">No Blogs to Show at this moment</div>
         </div>
       </section>
@@ -67,7 +53,6 @@ export default function BlogSection() {
 
   return (
     <section id="blogs" className="py-20 relative">
-
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
@@ -86,7 +71,7 @@ export default function BlogSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {blogs.map((post, index) => (
+          {blogs.map((post:Blog, index:number) => (
             <motion.div
               key={`${post.id}-${index}`}
               initial={{ opacity: 0 }}

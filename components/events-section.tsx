@@ -1,10 +1,11 @@
+// components/events-section.tsx
 "use client"
 
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, MapPin, Clock, ArrowRight, ExternalLink } from "lucide-react"
-import { useEffect, useState } from "react";
+import { useCachedFetch } from "@/hooks/useCachedFetch"
 import { cn } from "@/lib/utils"
 
 type Event = {
@@ -19,45 +20,31 @@ type Event = {
   link?: string;
 };
 
-
 export default function EventsSection() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { data, error, isLoading } = useCachedFetch<{data: {events: Event[]}}>(
+    'homepage-events',
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events?page=1&limit=3`
+  )
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events?page=1&limit=3`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await response.json();
-        
-        // Normalize status and sort by date (newest to oldest)
-        const normalizedEvents = data.data.events.map((event: Event) => ({
-          ...event,
-          status: event.status.toLowerCase() === "upcoming" ? "upcoming" :
-                  event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
-        }));
-        
-        const sortedEvents = normalizedEvents.sort((a:Event, b:Event) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          return dateB.getTime() - dateA.getTime();
-        });
-        
-        setEvents(sortedEvents);
-      } catch (err) {
-        setError((err as Error).message);
-      }
-    };
+  let events = data?.data?.events || []
 
-    fetchEvents();
-  }, []);
+  // Sort events by date if we have data
+  if (events.length > 0) {
+    const normalizedEvents = events.map((event: Event) => ({
+      ...event,
+      status: event.status.toLowerCase() === "upcoming" ? "upcoming" :
+              event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
+    }));
+    
+    events = normalizedEvents.sort((a: Event, b: Event) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
 
   const renderEventButton = (event: Event) => {
     if (event.status === "completed") {
-      // Past events: show View button only if external link exists
       if (event.link) {
         const url = event.link.startsWith('http://') || event.link.startsWith('https://')
           ? event.link
@@ -75,16 +62,14 @@ export default function EventsSection() {
           </a>
         );
       }
-      return null; // No button for past events without link
+      return null;
     } else if (event.status === "ongoing") {
-      // Ongoing events: show Register button
       return (
         <button className="px-4 py-2 bg-red-600/50 text-cream rounded hover:bg-red-600 transition-colors shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)]">
           Register Now
         </button>
       );
     } else if (event.status === "upcoming") {
-      // Upcoming events: show Coming Soon text
       return (
         <div className="text-cream/60 text-sm font-medium">
           Coming Soon
@@ -94,7 +79,7 @@ export default function EventsSection() {
     return null;
   };
 
-  if (error || events.length === 0) {
+  if (error || (!isLoading && events.length === 0)) {
     return (
       <section className="py-16 relative">
         <div className="fixed inset-0 bg-[url('/playing-cards-red-glow.png')] opacity-5 mix-blend-multiply pointer-events-none z-0"></div>
@@ -128,7 +113,7 @@ export default function EventsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event, index) => (
+          {events.map((event:Event, index:number) => (
             <div 
               key={`${event.id}-${index}`} 
               className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col"
