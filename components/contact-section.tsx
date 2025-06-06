@@ -97,7 +97,7 @@ export default function ContactSection() {
             <div className="space-y-6">
               <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <Instagram size={18} />
+                  <Instagram size={18} className="filter drop-shadow-[0_0_12px_rgba(255,0,0,0.8)]" />
                 </div>
                 <div>
                   <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.instagram.com/kgts.iitkgp?igsh=M2ZxZTNzM2V6cDFv">Instagram</a>
@@ -106,7 +106,7 @@ export default function ContactSection() {
 
               <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <Facebook size={18} />
+                  <Facebook size={18} className="filter drop-shadow-[0_0_12px_rgba(255,0,0,0.8)]" />
                 </div>
                 <div>
                   <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.facebook.com/The.KGTS?mibextid=rS40aB7S9Ucbxw6v">Facebook</a>
@@ -115,7 +115,7 @@ export default function ContactSection() {
 
               <div className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <Linkedin size={18} />
+                  <Linkedin size={18} className="filter drop-shadow-[0_0_12px_rgba(255,0,0,0.8)]" />
                 </div>
                 <div>
                   <a target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-cream hover:underline" href="https://www.linkedin.com/company/the-kgts/">LinkedIn</a>
@@ -124,7 +124,7 @@ export default function ContactSection() {
 
               <div className="flex items-start">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-[#8B0000]/30 flex items-center justify-center text-[#8B0000] mr-4">
-                  <MapPin size={18} />
+                  <MapPin size={18} className="filter drop-shadow-[0_0_12px_rgba(255,0,0,0.8)]" />
                 </div>
                 <div>
                   <h4 className="text-lg font-medium text-cream">Location</h4>

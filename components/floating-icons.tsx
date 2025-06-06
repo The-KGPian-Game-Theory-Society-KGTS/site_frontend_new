@@ -11,6 +11,8 @@ type FloatingIcon = {
   opacity: number
   rotation: number
   rotationSpeed: number
+  speedX: number  // Add horizontal speed
+  speedY: number  // Add vertical speed
 }
 
 export default function FloatingIcons() {
@@ -91,6 +93,8 @@ export default function FloatingIcons() {
         opacity: 0.15 + seededRandom(seed + 5) * 0.2,
         rotation: seededRandom(seed + 6) * Math.PI * 2,
         rotationSpeed: (seededRandom(seed + 7) - 0.5) * 0.02,
+        speedX: (seededRandom(seed + 8) - 0.5) * 2, // Random horizontal speed
+        speedY: (seededRandom(seed + 9) - 0.5) * 2, // Random vertical speed
       })
     }
 
@@ -130,14 +134,19 @@ export default function FloatingIcons() {
         ctx.fillText(icon.symbol, 0, 0)
         ctx.restore()
 
-        // Update position
-        icon.y += icon.speed
+        // Update position with bouncing
+        icon.x += icon.speedX
+        icon.y += icon.speedY
         icon.rotation += icon.rotationSpeed
 
-        // Reset position if out of screen
-        if (icon.y > canvas.height + icon.size) {
-          icon.y = -icon.size
-          icon.x = seededRandom(Date.now() + icon.x) * canvas.width
+        // Bounce off edges
+        if (icon.x < 0 || icon.x > canvas.width) {
+          icon.speedX *= -1
+          icon.x = Math.max(0, Math.min(canvas.width, icon.x))
+        }
+        if (icon.y < 0 || icon.y > canvas.height) {
+          icon.speedY *= -1
+          icon.y = Math.max(0, Math.min(canvas.height, icon.y))
         }
       })
 

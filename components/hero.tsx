@@ -115,16 +115,20 @@ export default function Hero() {
         ctx.fillText(particle.shape, 0, 0)
         ctx.restore()
 
-        // Update position
+        // Update position with bouncing
         particle.x += particle.speedX
         particle.y += particle.speedY
         particle.rotation += particle.rotationSpeed
 
-        // Keep particles within bounds
-        if (particle.x > canvas.width) particle.x = 0
-        if (particle.x < 0) particle.x = canvas.width
-        if (particle.y > canvas.height) particle.y = 0
-        if (particle.y < 0) particle.y = canvas.height
+        // Bounce off edges
+        if (particle.x < 0 || particle.x > canvas.width) {
+          particle.speedX *= -1
+          particle.x = Math.max(0, Math.min(canvas.width, particle.x))
+        }
+        if (particle.y < 0 || particle.y > canvas.height) {
+          particle.speedY *= -1
+          particle.y = Math.max(0, Math.min(canvas.height, particle.y))
+        }
       })
     }
 
@@ -136,7 +140,7 @@ export default function Hero() {
   }, [isClient])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative bg-black min-h-screen flex items-center justify-center overflow-hidden">
       {/* Playing Cards Background Image */}
       {/* <div className="absolute inset-0 z-0">
         <Image
@@ -188,7 +192,7 @@ export default function Hero() {
             href="/blog"
             className="px-8 py-3 bg-transparent border-2 border-cream/40 text-cream rounded-md text-lg font-medium hover:border-cream/70 transition-all duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(255,255,221,0.3)] cursor-pointer hover:scale-105 transform"
           >
-            Explore Blogs
+            Explore Articles
           </Link>
         </motion.div>
       </div>

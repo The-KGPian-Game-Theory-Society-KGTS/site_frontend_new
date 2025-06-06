@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation"
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Events", href: "/events" },
-  { name: "Articles", href: "/blog" },
-  { name: "Games", href: "/games" },
   { name: "About Us", href: "/about" },
   { name: "Team", href: "/team" },
+  { name: "Games", href: "/games" },
+  { name: "Articles", href: "/blog" },
+  { name: "Events", href: "/events" },
 ]
 
 export default function Navbar() {
@@ -66,23 +66,33 @@ export default function Navbar() {
     e.preventDefault()
     setIsOpen(false) // Close mobile menu if open
     
-    if (window.location.pathname === '/') {
-      // If we're already on the home page, scroll to bottom
-      window.scrollTo({ 
-        top: document.documentElement.scrollHeight, 
-        behavior: 'smooth' 
-      })
+    // If we're on another page, navigate to home page with contact section
+    if (window.location.pathname !== '/') {
+      router.push('/#contact')
+      // Wait for navigation to complete before scrolling
+      // setTimeout(() => {
+      //   const contactSection = document.getElementById('contact')
+      //   console.log("started scrolling")
+      //   if (contactSection) {
+      //     const navbarHeight = 80 // Approximate navbar height
+      //     const offset = contactSection.offsetTop - navbarHeight
+      //     window.scrollTo({
+      //       top: offset,
+      //       behavior: 'smooth'
+      //     })
+      //   }
+      // }, 2000)
     } else {
-      // If we're on another page, navigate to home and then scroll to bottom
-      router.push('/')
-      
-      // Use a timeout to wait for navigation, then scroll to bottom
-      setTimeout(() => {
-        window.scrollTo({ 
-          top: document.documentElement.scrollHeight, 
-          behavior: 'smooth' 
+      // If we're already on home page, just scroll to contact section
+      const contactSection = document.getElementById('contact')
+      if (contactSection) {
+        const navbarHeight = 80 // Approximate navbar height
+        const offset = contactSection.offsetTop - navbarHeight
+        window.scrollTo({
+          top: offset,
+          behavior: 'smooth'
         })
-      }, 500) // Give some time for the page to load
+      }
     }
   }
 
@@ -103,7 +113,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-2.5">
             <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
               <Image
-                src="/kgtsnewlogo.png"
+                src="/kgts-logo.png"
                 alt="KGTS Logo"
                 fill
                 sizes="44px"

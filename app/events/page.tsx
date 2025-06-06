@@ -142,8 +142,11 @@ export default function EventsPage() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredEvents.map((event) => (
-                <div key={event.id} className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col">
+              {filteredEvents.map((event, index) => (
+                <div 
+                  key={`event-${event.id || index}`} 
+                  className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col"
+                >
                   <div className="h-48 overflow-hidden relative">
                     <div
                       className="absolute inset-0 bg-cover bg-center"

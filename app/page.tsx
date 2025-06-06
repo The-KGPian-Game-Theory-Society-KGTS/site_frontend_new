@@ -12,8 +12,8 @@ export default function Home() {
       <main className="relative z-10">
         <Hero />
         <AboutSection />
-        <EventsSection />
         <BlogSection />
+        <EventsSection />
         <ContactSection />
       </main>
     </div>
