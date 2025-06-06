@@ -36,10 +36,10 @@ export default function AboutSection() {
 
               <div className="mt-6 text-center">
                 <Link
-                  href="/team"
+                  href="/about"
                   className="inline-flex items-center px-4 py-2 bg-[#8B0000]/50 text-cream rounded hover:bg-[#8B0000] transition-all duration-300 ease-in-out shadow-[0_0_10px_rgba(139,0,0,0.2)] hover:shadow-[0_0_15px_rgba(139,0,0,0.4)] cursor-pointer hover:scale-105 transform group"
                 >
-                  <span>Meet Our Team</span>
+                  <span>Learn More</span>
                   <ChevronRight className="ml-2 w-4 h-4 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
                 </Link>
               </div>

@@ -105,24 +105,24 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-black/90 backdrop-blur-md border-b border-red-600/30 py-2.5" : "bg-transparent py-4"
+        scrolled ? "bg-black/90 backdrop-blur-md border-b border-red-600/30 py-2" : "bg-transparent py-4"
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2.5">
-            <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
+        <div className="flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-red-500/50 hover:border-red-500 transition-colors">
               <Image
                 src="/kgts-logo.png"
                 alt="KGTS Logo"
                 fill
-                sizes="44px"
+                sizes="48px"
                 className="object-cover"
                 priority
                 loading="eager"
               />
             </div>
-            <span className="text-2xl font-serif font-bold text-cream hover:text-red-500 transition-colors">
+            <span className="text-3xl font-serif font-bold text-cream hover:text-red-500 transition-colors">
               <span className="text-red-500 filter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">K</span>GTS
             </span>
           </Link>

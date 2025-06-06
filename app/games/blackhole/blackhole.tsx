@@ -424,48 +424,53 @@ const BlackHoleGame = () => {
                 <p className="text-lg sm:text-xl font-bold text-red-400 mt-2">{timeoutWinner === 1 ? player1Name : player2Name} is the winner!</p>
               </div>
             </div>
-          ) : (
-            isGameOver && (
-              <>
-                <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-900/20 border border-red-600/30 rounded-lg text-center">
-                  <h2 className="text-xl sm:text-2xl font-serif font-bold text-cream mb-2">Game Over</h2>
-                  <div className="space-y-1 text-base sm:text-lg">
-                    <p>{player1Name} Score: <span className="text-red-500">{p1}</span></p>
-                    <p>{player2Name} Score: <span className="text-red-500">{p2}</span></p>
-                    <p className="text-xs sm:text-sm text-cream/70 mt-1">
-                      Winner determined by {getRingDescription(winningRing)}
-                    </p>
-                    <p className="text-lg sm:text-xl font-medium mt-2">
-                      {p1 < p2 ? `${player1Name} Wins!` : p1 > p2 ? `${player2Name} Wins!` : 'It\'s a Tie!'}
-                    </p>
-                    <p className="text-xs sm:text-sm text-cream/70 mt-1">
-                      (Lower score wins - further from the black hole)
-                    </p>
+          ) : isGameOver && (
+            <>
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-900/20 border border-red-600/30 rounded-lg text-center">
+                <h2 className="text-xl sm:text-2xl font-serif font-bold text-cream mb-2">Game Over</h2>
+                <div className="space-y-1 text-base sm:text-lg">
+                  <p>{player1Name} Score: <span className="text-red-500">{p1}</span></p>
+                  <p>{player2Name} Score: <span className="text-red-500">{p2}</span></p>
+                  {p1 !== p2 && (
+                    <>
+                      <p className="text-xs sm:text-sm text-cream/70 mt-1">
+                        Winner determined by {getRingDescription(winningRing)}
+                      </p>
+                      <p className="text-lg sm:text-xl font-medium mt-2">
+                        {p1 < p2 ? `${player1Name} Wins!` : `${player2Name} Wins!`}
+                      </p>
+                    </>
+                  )}
+                  {p1 === p2 && (
+                    <p className="text-lg sm:text-xl font-medium mt-2 text-red-400">It's a Tie!</p>
+                  )}
+                  <p className="text-xs sm:text-sm text-cream/70 mt-1">
+                    (Lower score wins - further from the black hole)
+                  </p>
+                </div>
+              </div>
+
+              {p1 !== p2 && blackHoleIndex !== null && (
+                <div className="mt-4 text-center">
+                  <h3 className="text-base sm:text-lg font-medium mb-2">Scoring Rings</h3>
+                  <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
+                    {[1, 2, 3, 4].map((ring) => {
+                      const ringTiles = getTilesAtDistance(blackHoleIndex, ring);
+                      const { p1: ringP1, p2: ringP2 } = calculateScoreForRing(ringTiles);
+                      return (
+                        <div
+                          key={ring}
+                          className={`p-2 sm:p-3 rounded-lg border ${ring === winningRing ? 'bg-red-900/30 border-red-500' : 'bg-black/30 border-red-600/20'}`}
+                        >
+                          <div className="text-xs sm:text-sm font-medium mb-1">{getRingDescription(ring)}</div>
+                          <div className="text-[10px] sm:text-xs">P1: {ringP1} | P2: {ringP2}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-
-                {blackHoleIndex !== null && (
-                  <div className="mt-4 text-center">
-                    <h3 className="text-base sm:text-lg font-medium mb-2">Scoring Rings</h3>
-                    <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
-                      {[1, 2, 3, 4].map((ring) => {
-                        const ringTiles = getTilesAtDistance(blackHoleIndex, ring);
-                        const { p1: ringP1, p2: ringP2 } = calculateScoreForRing(ringTiles);
-                        return (
-                          <div
-                            key={ring}
-                            className={`p-2 sm:p-3 rounded-lg border ${ring === winningRing ? 'bg-red-900/30 border-red-500' : 'bg-black/30 border-red-600/20'}`}
-                          >
-                            <div className="text-xs sm:text-sm font-medium mb-1">{getRingDescription(ring)}</div>
-                            <div className="text-[10px] sm:text-xs">P1: {ringP1} | P2: {ringP2}</div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </>
-            )
+              )}
+            </>
           )}
         </>
       )}

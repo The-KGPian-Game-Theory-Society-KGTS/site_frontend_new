@@ -129,7 +129,7 @@ const teamStructure = {
       },
       {
         role: "Academic Head",
-        name: "Aditya Kharat",
+        name: "Kharat Aditya N.",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/aditya-kharat",
@@ -179,7 +179,7 @@ const teamStructure = {
       },
       {
         role: "Sponsorship Head",
-        name: "Dishil Z.",
+        name: "Z. Dishil",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/dishil",
@@ -189,7 +189,7 @@ const teamStructure = {
       },
       {
         role: "Media and Public Relations Head",
-        name: "Mehedi Hasan",
+        name: "Mehedhi Hassan",
         image: "/placeholder.svg?height=300&width=300",
         social: {
           linkedin: "https://www.linkedin.com/in/mehedi-hasan",

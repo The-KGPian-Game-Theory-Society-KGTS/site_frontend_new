@@ -78,7 +78,7 @@ export default function ContactSection() {
           </h2>
           <div className="w-20 h-1 bg-[#8B0000] mx-auto"></div>
           <p className="text-cream/80 mt-6 max-w-2xl mx-auto">
-            Have questions about game theory? Get in touch with us and we'll be
+            Have questions? Get in touch with us and we'll be
             happy to help.
           </p>
         </motion.div>

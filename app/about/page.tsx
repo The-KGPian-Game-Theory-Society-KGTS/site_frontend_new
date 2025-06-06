@@ -91,7 +91,7 @@ export default function AboutPage() {
 
           <div className="text-center">
             <Link
-              href="/team"
+              href="/about"
               className="inline-flex items-center px-6 py-3 bg-red-600 text-cream rounded-md hover:bg-red-700 transition-colors shadow-[0_0_15px_rgba(255,0,0,0.5)] hover:shadow-[0_0_20px_rgba(255,0,0,0.7)]"
             >
               Meet Our Team
