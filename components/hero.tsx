@@ -63,34 +63,41 @@ export default function Hero() {
       // Currency symbols
       "₹", "$", "€", "£", "¥",
     ]
-    const colors = ["#ff0000", "#FFFDD0", "#ff3333"]
+    const colors = ["#ff0000", "#FFFDD0"] // Red and cream colors in 50:50 proportion
 
     // Create an evenly distributed set of particles
-    for (let i = 0; i < 100; i++) {
-      // Divide the screen into a grid and place particles randomly within each cell
-      const gridSize = 10 // 10x10 grid
-      const cellWidth = canvas.width / gridSize
-      const cellHeight = canvas.height / gridSize
-      
-      // Calculate which cell this particle belongs to
-      const cellX = i % gridSize
-      const cellY = Math.floor(i / gridSize)
-      
-      // Add some randomness within the cell
-      const randomX = Math.random() * cellWidth
-      const randomY = Math.random() * cellHeight
-      
-      particles.push({
-        x: cellX * cellWidth + randomX,
-        y: cellY * cellHeight + randomY,
-        size: Math.random() * (window.innerWidth > 1024 ? 35 : 20) + (window.innerWidth > 1024 ? 15 : 10),
-        speedX: (Math.random() - 0.5) * 1.2,
-        speedY: (Math.random() - 0.5) * 1.2,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        shape: shapes[Math.floor(Math.random() * shapes.length)],
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.03,
-      })
+    const totalParticles = window.innerWidth > 1024 ? 120 : 60
+    const gridSize = window.innerWidth > 1024 ? 12 : 10
+    const particlesPerCell = Math.ceil(totalParticles / (gridSize * gridSize))
+    
+    for (let cellY = 0; cellY < gridSize; cellY++) {
+      for (let cellX = 0; cellX < gridSize; cellX++) {
+        for (let p = 0; p < particlesPerCell; p++) {
+          const cellWidth = canvas.width / gridSize
+          const cellHeight = canvas.height / gridSize
+          
+          // Calculate base position for the cell
+          const baseX = cellX * cellWidth
+          const baseY = cellY * cellHeight
+          
+          // Add random offset within the cell, but keep some margin from edges
+          const margin = window.innerWidth > 1024 ? 20 : 15
+          const randomX = baseX + margin + Math.random() * (cellWidth - 2 * margin)
+          const randomY = baseY + margin + Math.random() * (cellHeight - 2 * margin)
+          
+          particles.push({
+            x: randomX,
+            y: randomY,
+            size: Math.random() * (window.innerWidth > 1024 ? 35 : 15) + (window.innerWidth > 1024 ? 15 : 8),
+            speedX: (Math.random() - 0.5) * (window.innerWidth > 1024 ? 1.2 : 0.8),
+            speedY: (Math.random() - 0.5) * (window.innerWidth > 1024 ? 1.2 : 0.8),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            shape: shapes[Math.floor(Math.random() * shapes.length)],
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.03,
+          })
+        }
+      }
     }
 
     const animate = () => {
