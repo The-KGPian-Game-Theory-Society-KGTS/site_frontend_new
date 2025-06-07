@@ -140,11 +140,11 @@ const teamStructure = {
       {
         role: "Tech Head",
         name: "Fazal H. Khan",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/X7pMZ2q6/Whats-App-Image-2025-06-07-at-17-47-57-8698ea6a.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/fazal",
-          gmail: "mailto:fazal@gmail.com",
-          instagram: "https://instagram.com/fazal"
+          linkedin: "https://www.linkedin.com/in/fazal-hayat-khan-747443283/",
+          gmail: "mailto:fazalhayatkhan001@gmail.com",
+          instagram: "https://www.instagram.com/_fazal_776/"
         }
       },
       {
