@@ -75,21 +75,21 @@ const teamStructure = {
       {
         role: "General Secretary",
         name: "Kunal Surana",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/MpFgPXnR/IMG-20250602-230215.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/kunal-surana",
-          gmail: "mailto:kunal.surana@gmail.com",
-          instagram: "https://instagram.com/kunalsurana"
+          linkedin: "https://www.linkedin.com/in/kunal-surana-7444132a7",
+          gmail: "mailto:kunalsurana308@gmail.com",
+          instagram: "https://www.instagram.com/_kunalsurana"
         }
       },
       {
         role: "General Secretary",
         name: "Pranjal Malpani",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/cJ2HkV8f/IMG-20250602-212826.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/pranjal-malpani",
-          gmail: "mailto:pranjal.malpani@gmail.com",
-          instagram: "https://instagram.com/pranjalmalpani"
+          linkedin: "https://www.linkedin.com/in/pranjalmalpani",
+          gmail: "mailto:malpanipranjal05@gmail.com",
+          instagram: "https://www.instagram.com/pranjalmalpani_11235"
         }
       },
     ],
@@ -100,21 +100,21 @@ const teamStructure = {
       {
         role: "Academic Head",
         name: "Anuj Asthana",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/rFwqZJ2b/IMG-20250606-WA0000.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/anuj-asthana",
-          gmail: "mailto:anuj.asthana@gmail.com",
-          instagram: "https://instagram.com/anujasthana"
+          linkedin: "https://www.linkedin.com/in/anuj-asthana-1821a1292/",
+          gmail: "mailto:anujasthana2804@gmail.com",
+          instagram: "https://www.instagram.com/anuj_ada2804"
         }
       },
       {
         role: "Academic Head",
         name: "Utsab Karan",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/zDwW80Bk/IMG-20250203-WA0075.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/utsab-karan",
-          gmail: "mailto:utsab.karan@gmail.com",
-          instagram: "https://instagram.com/utsabkaran"
+          linkedin: "https://www.linkedin.com/in/utsab-karan-25774b282",
+          gmail: "mailto:utsabkaran2010@gmail.com",
+          instagram: "https://www.instagram.com/ussab_"
         }
       },
       {
@@ -122,9 +122,9 @@ const teamStructure = {
         name: "Ketan Suman",
         image: "/placeholder.svg?height=300&width=300",
         social: {
-          linkedin: "https://www.linkedin.com/in/ketan",
-          gmail: "mailto:ketan@gmail.com",
-          instagram: "https://instagram.com/ketan"
+          linkedin: "https://www.linkedin.com/in/ketan073",
+          gmail: "mailto:ketansuman385@gmail.com",
+          instagram: "#"
         }
       },
       {
@@ -150,11 +150,11 @@ const teamStructure = {
       {
         role: "Tech Head",
         name: "Akshat Jiwrajka",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/15ZszYFQ/IMG-20250127-134403-393.jpg",
         social: {
-          linkedin: "https://www.linkedin.com/in/akshat-jiwrajka",
-          gmail: "mailto:akshat.jiwrajka@gmail.com",
-          instagram: "https://instagram.com/akshatjiwrajka"
+          linkedin: "https://www.linkedin.com/in/akshat-jiwrajka-ba7b41250",
+          gmail: "mailto:akshat2306jwr3@gmail.com",
+          instagram: "https://www.instagram.com/akshat_jiwrajka_"
         }
       },
       {
@@ -162,9 +162,9 @@ const teamStructure = {
         name: "Arkajyoti Dey",
         image: "/placeholder.svg?height=300&width=300",
         social: {
-          linkedin: "https://www.linkedin.com/in/arkajyoti-dey",
-          gmail: "mailto:arkajyoti.dey@gmail.com",
-          instagram: "https://instagram.com/arkajyotidey"
+          linkedin: "https://www.linkedin.com/in/arkajyoti-dey-b5a409255/",
+          gmail: "mailto:arka.jyoti.dey2005@gmail.com",
+          instagram: "https://www.instagram.com/whynot_jyoti"
         }
       },
       {
@@ -172,19 +172,19 @@ const teamStructure = {
         name: "Usoshi Dey",
         image: "/placeholder.svg?height=300&width=300",
         social: {
-          linkedin: "https://www.linkedin.com/in/usoshi-dey",
-          gmail: "mailto:usoshi.dey@gmail.com",
-          instagram: "https://instagram.com/usoshidey"
+          linkedin: "https://www.linkedin.com/in/usoshi-dey-73a81a293/",
+          gmail: "mailto:usoshidey@gmail.com",
+          instagram: "https://www.instagram.com/usoshidey"
         }
       },
       {
         role: "Sponsorship Head",
-        name: "Z. Dishil",
+        name: "Zalavadiya Dishil",
         image: "/placeholder.svg?height=300&width=300",
         social: {
-          linkedin: "https://www.linkedin.com/in/dishil",
-          gmail: "mailto:dishil@gmail.com",
-          instagram: "https://instagram.com/dishil"
+          linkedin: "https://www.linkedin.com/in/dishil-zalavadiya-943020280/",
+          gmail: "mailto:dishil2906@gmail.com",
+          instagram: "https://www.instagram.com/dishil_zalavadiya"
         }
       },
       {
@@ -192,14 +192,15 @@ const teamStructure = {
         name: "Mehedhi Hassan",
         image: "/placeholder.svg?height=300&width=300",
         social: {
-          linkedin: "https://www.linkedin.com/in/mehedi-hasan",
-          gmail: "mailto:mehedi.hasan@gmail.com",
-          instagram: "https://instagram.com/mehedihasan"
+          linkedin: "https://www.linkedin.com/in/mehedhi2909",
+          gmail: "mailto:mehedhi.hassan10@gmail.com",
+          instagram: "https://www.instagram.com/mehedhi2909"
         }
       },
     ],
   },
 }
+
 
 // Grouping department members for structured layout
 const academicHeads = teamStructure.departments.members.filter(m => m.role === "Academic Head");

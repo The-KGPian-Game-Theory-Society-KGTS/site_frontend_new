@@ -259,11 +259,11 @@ export default function Navbar() {
           ) : (
             /* Mobile Auth Links */
             <div className="border-t border-red-600/30 pt-4 space-y-2">
-              <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors py-2 block" onClick={() => setIsOpen(false)}>
+              {/* <Link href="/auth/login" className="text-cream hover:text-red-500 transition-colors py-2 block" onClick={() => setIsOpen(false)}>
                 Login
-              </Link>
-              <Link href="/auth/signup" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)] inline-block" onClick={() => setIsOpen(false)}>
-                Sign Up
+              </Link> */}
+              <Link href="/auth/login" className="bg-red-500 text-cream transition-all duration-300 hover:bg-red-600 hover:text-white hover:scale-105 active:scale-95 px-4 py-2 rounded shadow-[0_0_10px_rgba(255,0,0,0.2)] hover:shadow-[0_0_15px_rgba(255,0,0,0.4)] inline-block" onClick={() => setIsOpen(false)}>
+                Sign In
               </Link>
             </div>
           )}
