@@ -180,7 +180,7 @@ const teamStructure = {
       {
         role: "Sponsorship Head",
         name: "Zalavadiya Dishil",
-        image: "/placeholder.svg?height=300&width=300",
+        image: "https://i.postimg.cc/90ksYWS2/image.png",
         social: {
           linkedin: "https://www.linkedin.com/in/dishil-zalavadiya-943020280/",
           gmail: "mailto:dishil2906@gmail.com",
