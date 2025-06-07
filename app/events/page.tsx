@@ -5,47 +5,47 @@ import { Calendar, Clock, MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import { Event } from "@/data/events"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react"
+import useSWR from 'swr'
+import { fetcher } from '@/lib/fetcher'
 
 export default function EventsPage() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState("all");
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await response.json();
-        const normalizedEvents = data.data.events.map((event: Event) => ({
-          ...event,
-          status: event.status.toLowerCase() === "upcoming" ? "upcoming" :
-            event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
-        }));
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/events`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      refreshInterval: 100000, // Refresh every 3 minutes (events change more frequently)
+      dedupingInterval: 60000, // Dedupe requests within 30 seconds
+    }
+  );
 
-        // Sort events by date (newest to oldest)
-        const sortedEvents = normalizedEvents.sort((a: Event, b: Event) => {
-          const dateA = new Date(a.date);
-          const dateB = new Date(b.date);
-          return dateB.getTime() - dateA.getTime();
-        });
+  // Process and sort events
+  const events: Event[] = useMemo(() => {
+    if (!data?.data?.events) return [];
+    
+    const normalizedEvents = data.data.events.map((event: Event) => ({
+      ...event,
+      status: event.status.toLowerCase() === "upcoming" ? "upcoming" :
+        event.status.toLowerCase() === "ongoing" ? "ongoing" : "completed",
+    }));
 
-        setEvents(sortedEvents);
-      } catch (err) {
-        setError((err as Error).message);
-      }
-    };
+    // Sort events by date (newest to oldest)
+    return normalizedEvents.sort((a: Event, b: Event) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }, [data]);
 
-    fetchEvents();
-  }, []);
-
-  const filteredEvents =
-    filter === "all"
+  const filteredEvents = useMemo(() => {
+    return filter === "all"
       ? events
       : events.filter((event) => event.status === filter);
+  }, [events, filter]);
 
   const renderEventButton = (event: Event) => {
     if (event.status === "completed") {
@@ -127,78 +127,80 @@ export default function EventsPage() {
           </div>
 
           {error && (
-            <div className="text-center text-red-500 mb-4">Error: {error}</div>
-          )}
-
-          {filteredEvents.length === 0 && !error && (
-            <div className="text-center text-cream/80">
-              No Events to Show at this moment.
+            <div className="text-center text-red-500 mb-4">
+              Error: {error.message || 'Failed to fetch events'}
             </div>
           )}
 
-          {filteredEvents.length === 0 ? (
+          {isLoading && events.length === 0 && (
             <div className="text-center text-cream/80">
-              No events available at the moment. Please check back later.
+              Loading events...
             </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredEvents.map((event, index) => (
-                <div 
-                  key={`event-${event.id || index}`} 
-                  className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col"
-                >
-                  <div className="h-48 overflow-hidden relative">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${event.image})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+          )}
+
+          {!isLoading && filteredEvents.length === 0 && !error && (
+            <div className="text-center text-cream/80">
+              {filter === "all" ? "No events available at the moment." : `No ${filter} events to show.`}
+            </div>
+          )}
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredEvents.map((event, index) => (
+              <div 
+                key={`event-${event.id || index}`} 
+                className="bg-black/70 border border-red-600/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300 group h-full flex flex-col"
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${event.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+                </div>
+
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-2">
+                    {event.title}
+                  </h3>
+
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center text-cream/70">
+                      <Calendar size={16} className="mr-2 text-red-500" />
+                      <span>{event.date}</span>
+                    </div>
+
+                    <div className="flex items-center text-cream/70">
+                      <Clock size={16} className="mr-2 text-red-500" />
+                      <span>{event.time}</span>
+                    </div>
+
+                    <div className="flex items-center text-cream/70">
+                      <MapPin size={16} className="mr-2 text-red-500" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
 
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-serif font-bold text-cream group-hover:text-red-500 transition-colors line-clamp-2">
-                      {event.title}
-                    </h3>
-
-                    <div className="mt-4 space-y-2">
-                      <div className="flex items-center text-cream/70">
-                        <Calendar size={16} className="mr-2 text-red-500" />
-                        <span>{event.date}</span>
-                      </div>
-
-                      <div className="flex items-center text-cream/70">
-                        <Clock size={16} className="mr-2 text-red-500" />
-                        <span>{event.time}</span>
-                      </div>
-
-                      <div className="flex items-center text-cream/70">
-                        <MapPin size={16} className="mr-2 text-red-500" />
-                        <span>{event.location}</span>
-                      </div>
+                  <div className="mt-4 relative flex-grow">
+                    <div className="overflow-hidden">
+                      <p
+                        className={cn(
+                          "text-cream/80 transition-[max-height] duration-500 ease-in-out",
+                          "group-hover:max-h-[500px]", // reveal all content
+                          "max-h-[4.5rem]" // height to show 3 lines
+                        )}
+                      >
+                        {event.description}
+                      </p>
                     </div>
+                  </div>
 
-                    <div className="mt-4 relative flex-grow">
-                      <div className="overflow-hidden">
-                        <p
-                          className={cn(
-                            "text-cream/80 transition-[max-height] duration-500 ease-in-out",
-                            "group-hover:max-h-[500px]", // reveal all content
-                            "max-h-[4.5rem]" // height to show 3 lines
-                          )}
-                        >
-                          {event.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      {renderEventButton(event)}
-                    </div>
+                  <div className="mt-6">
+                    {renderEventButton(event)}
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     </div>

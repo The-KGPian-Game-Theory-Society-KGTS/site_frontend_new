@@ -1,35 +1,28 @@
 "use client";
 
 import BlogCard from "@/components/blog-card"
-import { useEffect, useState } from "react";
 import { BlogPost } from "@/data/blog-posts"
-import Footer from "@/components/footer"
+import useSWR from 'swr'
+import { fetcher } from '@/lib/fetcher'
 
 export default function BlogPage() {
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      refreshInterval: 1000000, // Refresh every 5 minutes
+      dedupingInterval: 100000, // Dedupe requests within 1 minute
+    }
+  );
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch blogs");
-        }
-        const data = await response.json();
-        // Ensure each blog has a unique id
-        const blogsWithIds = data.data.blogs.map((blog: any, index: number) => ({
-          ...blog,
-          id: blog.id || index + 1 // Use existing id or generate one
-        }));
-        setBlogs(blogsWithIds);
-      } catch (err) {
-        setError((err as Error).message);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
+  // Process the data
+  const blogs: BlogPost[] = data?.data?.blogs ? 
+    data.data.blogs.map((blog: any, index: number) => ({
+      ...blog,
+      id: blog.id || index + 1 // Use existing id or generate one
+    })) : [];
 
   return (
     <div className="min-h-screen text-cream">
@@ -47,17 +40,25 @@ export default function BlogPage() {
           </div>
 
           {error && (
-            <div className="text-center text-red-500 mb-4">Error: {error}</div>
+            <div className="text-center text-red-500 mb-4">
+              Error: {error.message || 'Failed to fetch blogs'}
+            </div>
           )}
 
-          {blogs.length === 0 && !error && (
+          {isLoading && blogs.length === 0 && (
+            <div className="text-center text-cream/80">
+              Loading blogs...
+            </div>
+          )}
+
+          {!isLoading && blogs.length === 0 && !error && (
             <div className="text-center text-cream/80">
               No Blogs to Show at this moment.
             </div>
           )}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((post, index) => (
+            {blogs.map((post: BlogPost, index: number) => (
               <BlogCard key={post.id || `blog-${index}`} post={post} index={index} />
             ))}
           </div>
